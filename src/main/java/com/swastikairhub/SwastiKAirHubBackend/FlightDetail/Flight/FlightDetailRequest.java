@@ -1,21 +1,20 @@
 package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight;
 
 import com.swastikairhub.SwastiKAirHubBackend.AirlineCompany.AirlineCompany;
+import com.swastikairhub.SwastiKAirHubBackend.AirlineCompany.AirlineCompanyRequest;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector.Sector;
-import lombok.Builder;
+import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector.SectorRequest;
 import lombok.Data;
 
 import java.sql.Time;
 import java.util.Date;
 
 @Data
-@Builder
-public class FlightDTO {
-    private String id;
+public class FlightDetailRequest {
     private String flightCode;
     private Date departureDate;
     private String departureTime;
-    private Sector sector;
-    private AirlineCompany company;
     private String status;
+    private String sector;
+    private String companyName;
 }

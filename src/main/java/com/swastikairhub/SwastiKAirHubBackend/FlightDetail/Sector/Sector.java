@@ -14,7 +14,8 @@ public class Sector {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name="sector_id")
     private String id;
-    private String sectorName;
+
+    private String sectorCode;
     @Column(name="take_off_from")
     private String from;
     @Column(name="landing_to")

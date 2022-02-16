@@ -6,10 +6,10 @@ import java.util.List;
 
 @Service
 public interface FlightService {
-    FlightDTO save(FlightRequest request);
-    Iterable<Flight> findAll();
-    FlightDTO findBySector(String sector);
-    FlightDTO update(String id,FlightRequest request);
+    FlightDTO save(FlightDetailRequest request);
+    Iterable<FlightDetail> findAll();
+    FlightDTO findByFlightCode(String flightCode);
+    FlightDTO update(String id,FlightDetailRequest request);
     FlightDTO delete(String id);
-    List<FlightDTO> searchFlight(SearchFlightRequest request);
+    List<SearchFlightDTO> searchFlight(SearchFlightRequest request);
 }

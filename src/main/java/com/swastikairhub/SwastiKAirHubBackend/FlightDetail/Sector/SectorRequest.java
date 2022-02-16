@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SectorRequest {
-    private String sectorName;
+    private String sectorCode;
     private String from;
     private String to;
     private String duration;

@@ -77,7 +77,7 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService{
                 email(company.getEmail()).
                 name(company.getName()).
                 phoneNumber(company.getPhoneNumber()).
-                email(company.getEmail()).
+                address(company.getAddress()).
                 contractDate(company.getContractDate()).
                 contractStatus(company.getContractStatus()).
                 build();

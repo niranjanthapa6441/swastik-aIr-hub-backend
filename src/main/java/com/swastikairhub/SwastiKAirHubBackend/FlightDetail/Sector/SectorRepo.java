@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SectorRepo extends CrudRepository<Sector,String> {
-    @Query("SELECT se FROM Sector se where se.sectorName=?1")
+    @Query("SELECT se FROM Sector se where se.sectorCode=?1")
     Sector findBySector(String sector);
 }

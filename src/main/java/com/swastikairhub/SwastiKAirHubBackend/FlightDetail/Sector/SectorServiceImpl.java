@@ -25,14 +25,7 @@ public class SectorServiceImpl implements SectorService{
     public SectorDTO findBySector(String sector) {
         Sector findSector= repository.findBySector(sector);
         if (findSector!=null){
-            Sector sectorDTO=new Sector();
-            sectorDTO.setId(findSector.getId());
-            sectorDTO.setSectorName(findSector.getSectorName());
-            sectorDTO.setStatus(findSector.getStatus());
-            sectorDTO.setDuration(findSector.getDuration());
-            sectorDTO.setFrom(findSector.getFrom());
-            sectorDTO.setTo(findSector.getTo());
-            return toSectorDTO(sectorDTO);
+            return toSectorDTO(findSector);
         }
         else{
             throw new NullPointerException("Sector Does not exist");
@@ -70,7 +63,7 @@ public class SectorServiceImpl implements SectorService{
     private SectorDTO toSectorDTO(Sector sector) {
         return SectorDTO.builder()
                 .id(sector.getId())
-                .sectorName(sector.getSectorName())
+                .sectorCode(sector.getSectorCode())
                 .duration(sector.getDuration())
                 .from(sector.getFrom())
                 .to(sector.getTo())
@@ -80,7 +73,7 @@ public class SectorServiceImpl implements SectorService{
 
     private Sector toSector(SectorRequest request) {
         Sector sector= new Sector();
-        sector.setSectorName(request.getSectorName());
+        sector.setSectorCode(request.getSectorCode());
         sector.setDuration(request.getDuration());
         sector.setFrom(request.getFrom());
         sector.setTo(request.getTo());

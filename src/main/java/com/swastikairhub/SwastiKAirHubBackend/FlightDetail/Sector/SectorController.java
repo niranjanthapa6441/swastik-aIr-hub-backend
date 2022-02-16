@@ -2,7 +2,8 @@ package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@RestController
+@RequestMapping("/sector")
 public class SectorController {
     @Autowired
     private SectorService service;
@@ -14,8 +15,8 @@ public class SectorController {
     private Iterable<Sector> getAll(){
         return service.findAll();
     }
-    @GetMapping("/sector")
-    private SectorDTO findById(@RequestParam String sector){
+    @GetMapping("/{sector}")
+    private SectorDTO findBySector(@PathVariable String sector){
         return service.findBySector(sector);
     }
     @PutMapping("/{id}")

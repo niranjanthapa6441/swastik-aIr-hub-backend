@@ -15,5 +15,4 @@ public class PassengerController {
     public Iterable<Passenger> getAll(){
         return passengerService.findAll();
     }
-    @
 }

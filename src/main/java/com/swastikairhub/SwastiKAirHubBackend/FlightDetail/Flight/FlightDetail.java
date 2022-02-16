@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight;
 
+import com.swastikairhub.SwastiKAirHubBackend.AirlineCompany.AirlineCompany;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector.Sector;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "flight")
-public class Flight {
+public class FlightDetail {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -25,9 +26,17 @@ public class Flight {
     private Date departureDate;
 
     @Column(name = "departure_time")
-    private Time departureTime;
+    private String departureTime;
+
+    @Column(name = "status")
+    private String status;
 
     @ManyToOne
-    @JoinColumn(name ="sector_id")
+    @JoinColumn(name = "sector_id")
     private Sector sector;
+
+    @ManyToOne
+    @JoinColumn
+    private AirlineCompany Company;
+
 }
