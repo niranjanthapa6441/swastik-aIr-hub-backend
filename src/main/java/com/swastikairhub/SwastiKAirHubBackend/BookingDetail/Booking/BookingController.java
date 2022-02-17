@@ -10,23 +10,27 @@ public class BookingController {
     private  BookingService service;
 
     @GetMapping
-    private Iterable<Booking> findAll(){
+    public Iterable<Booking> findAll(){
         return service.findAll();
     }
-    @GetMapping
-    private BookingDTO save(@RequestBody BookingRequest request){
+    @PutMapping
+    public BookingDTO save(@RequestBody BookingRequest request){
         return service.save(request);
     }
     @PutMapping("/{id}")
-    private BookingDTO update(@PathVariable String id,@RequestBody BookingRequest request){
+    public BookingDTO update(@PathVariable String id,@RequestBody BookingRequest request){
         return service.update(id,request);
     }
     @GetMapping("/{id}")
-    private BookingDTO findById(@PathVariable String id){
+    public BookingDTO findById(@PathVariable String id){
         return service.findById(id);
     }
     @DeleteMapping("/{id}")
-    private BookingDTO delete(@PathVariable String id){
+    public BookingDTO delete(@PathVariable String id){
         return service.delete(id);
+    }
+    @GetMapping("/customer/{id}")
+    public Iterable<Booking> findByCustomerId(@PathVariable String id){
+        return service.findByCustomerId(id);
     }
 }

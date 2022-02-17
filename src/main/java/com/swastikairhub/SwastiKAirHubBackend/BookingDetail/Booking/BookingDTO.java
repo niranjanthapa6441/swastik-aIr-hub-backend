@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swastikairhub.SwastiKAirHubBackend.Customer.Customer;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.FlightTicket.FlightTicket;
 import lombok.Builder;
@@ -15,7 +16,9 @@ public class BookingDTO {
     private String id;
     private FlightTicket flightTicket;
     private Customer customer;
-    private Date bookingDate;
-    private Time bookingTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private String bookingDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    private String bookingTime;
     private String status;
 }

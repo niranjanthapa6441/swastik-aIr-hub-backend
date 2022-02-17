@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swastikairhub.SwastiKAirHubBackend.Customer.Customer;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.FlightTicket.FlightTicket;
 import lombok.Data;
@@ -7,7 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -27,9 +29,11 @@ public class Booking {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private Date bookingDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate bookingDate;
 
-    private Time bookingTime;
+    @JsonFormat(pattern = "HH:mm:ss")
+    private LocalTime bookingTime;
 
     private String status;
 }
