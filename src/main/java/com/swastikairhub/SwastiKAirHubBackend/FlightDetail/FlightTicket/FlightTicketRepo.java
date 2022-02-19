@@ -13,6 +13,7 @@ import java.util.List;
 public interface FlightTicketRepo extends JpaRepository<FlightTicket,String> {
     @Query("SELECT flt FROM FlightTicket flt where flt.detail=?1 and flt.ticket=?2")
     FlightTicket findFlightTicket(FlightDetail detail, Ticket ticket);
+
     @Query("SELECT flt.ticket FROM FlightTicket flt where flt.detail=?1 ORDER BY flt.ticket.price")
     List<Ticket> findFlightTicketByFlight(FlightDetail detail);
 }

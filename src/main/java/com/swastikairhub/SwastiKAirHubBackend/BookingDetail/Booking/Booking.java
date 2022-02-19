@@ -35,5 +35,9 @@ public class Booking {
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime bookingTime;
 
+    private String numberOfTraveller;
+
+    private int totalTicketPrice;
+
     private String status;
 }

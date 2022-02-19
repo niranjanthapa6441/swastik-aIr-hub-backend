@@ -10,7 +10,6 @@ import javax.persistence.OneToMany;
 
 @Data
 public class PassengerRequest {
-    private String bookingId;
     private String firstName;
     private String lastName;
     private String middleName;

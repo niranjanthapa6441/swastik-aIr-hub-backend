@@ -1,6 +1,7 @@
 package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger.Passenger;
 import com.swastikairhub.SwastiKAirHubBackend.Customer.Customer;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.FlightTicket.FlightTicket;
 import lombok.Builder;
@@ -10,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
+
 @Data
 @Builder
 public class BookingDTO {
@@ -20,5 +23,8 @@ public class BookingDTO {
     private String bookingDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     private String bookingTime;
+    private String numberOfTraveller;
+    private String totalPrice;
     private String status;
+    private List<Passenger> passengerList;
 }

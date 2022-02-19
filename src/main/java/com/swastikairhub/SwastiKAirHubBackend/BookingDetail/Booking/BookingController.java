@@ -13,7 +13,7 @@ public class BookingController {
     public Iterable<Booking> findAll(){
         return service.findAll();
     }
-    @PutMapping
+    @PostMapping
     public BookingDTO save(@RequestBody BookingRequest request){
         return service.save(request);
     }
