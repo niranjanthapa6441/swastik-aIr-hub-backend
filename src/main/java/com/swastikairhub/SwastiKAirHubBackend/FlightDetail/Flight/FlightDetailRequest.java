@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 public class FlightDetailRequest {
     private String flightCode;
-    private Date departureDate;
+    private String departureDate;
     private String departureTime;
     private String status;
     private String sector;

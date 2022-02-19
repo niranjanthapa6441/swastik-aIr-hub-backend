@@ -3,14 +3,24 @@ package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight;
 
 import com.swastikairhub.SwastiKAirHubBackend.AirlineCompany.AirlineCompany;
 import com.swastikairhub.SwastiKAirHubBackend.AirlineCompany.AirlineCompanyRepo;
+import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.FlightTicket.FlightTicket;
+import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.FlightTicket.FlightTicketRepo;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector.Sector;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector.SectorRepo;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Ticket.Ticket;
+import com.swastikairhub.SwastiKAirHubBackend.Util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class FlightServiceImpl implements FlightService {
     @Autowired
@@ -21,6 +31,8 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private AirlineCompanyRepo companyRepo;
+    @Autowired
+    private FlightTicketRepo flightTicketRepo;
 
     @Override
     public FlightDTO save(FlightDetailRequest request) {
@@ -35,7 +47,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public FlightDTO findByFlightCode(String flightCode) {
-        FlightDetail detail= flightRepo.findByFlightCode(flightCode);
+        FlightDetail detail = flightRepo.findByFlightCode(flightCode);
         if (detail != null)
             return toFlightDTO(detail);
         else
@@ -68,17 +80,36 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<SearchFlightDTO> searchFlight(SearchFlightRequest request) {
-        return null;
+        DateFormatter dateFormatter = new DateFormatter();
+        LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
+        Sector sector = sectorRepo.findBySector(request.getSectorCode());
+        List<FlightDetail> searchFlights = flightRepo.findFlightBySectorAndDate(sector, date);
+        List<SearchFlightDTO> searchFlightDTOS = new ArrayList<>();
+        for (FlightDetail detail : searchFlights
+        ) {
+            List<Ticket> flightTickets = flightTicketRepo.findFlightTicketByFlight(detail);
+            SearchFlightDTO searchFlightDTO= new SearchFlightDTO();
+            searchFlightDTO.setCompanyName(detail.getCompany().getName());
+            searchFlightDTO.setFlightCode(detail.getFlightCode());
+            searchFlightDTO.setSectorCode(detail.getSector().getSectorCode());
+            searchFlightDTO.setDepartureDate(String.valueOf(detail.getDepartureDate()));
+            searchFlightDTO.setDepartureTime(detail.getDepartureTime());
+            searchFlightDTO.setStatus(detail.getStatus());
+            searchFlightDTO.setTickets(flightTickets);
+            searchFlightDTOS.add(searchFlightDTO);
+        }
+        return searchFlightDTOS;
     }
 
     private FlightDetail toFlightDetail(FlightDetailRequest request) {
+        DateFormatter dateFormatter = new DateFormatter();
+        LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
         FlightDetail flightDetail = new FlightDetail();
         flightDetail.setFlightCode(request.getFlightCode());
         flightDetail.setStatus(request.getStatus());
         flightDetail.setCompany(toCompany(request.getCompanyName()));
-        flightDetail.setDepartureDate(request.getDepartureDate());
+        flightDetail.setDepartureDate(date);
         flightDetail.setSector(toSector(request.getSector()));
-        flightDetail.setDepartureDate(request.getDepartureDate());
         flightDetail.setDepartureTime(request.getDepartureTime());
         return flightDetail;
     }
@@ -90,25 +121,23 @@ public class FlightServiceImpl implements FlightService {
                 company(flightDetail.getCompany()).
                 sector(flightDetail.getSector()).
                 status(flightDetail.getStatus()).
-                departureDate(flightDetail.getDepartureDate()).build();
+                departureDate(String.valueOf(flightDetail.getDepartureDate())).build();
     }
 
     private Sector toSector(String sector) {
-        Sector findSector=sectorRepo.findBySector(sector);
-        if (findSector != null){
+        Sector findSector = sectorRepo.findBySector(sector);
+        if (findSector != null) {
             return findSector;
-        }
-        else
+        } else
             throw new NullPointerException("Sector Doesn't exist");
     }
 
 
     private AirlineCompany toCompany(String companyName) {
-    AirlineCompany company=companyRepo.findByCompanyName(companyName);
-    if (company!=null){
-        return company;
-    }
-    else
-        throw new NullPointerException("The company does not exist");
+        AirlineCompany company = companyRepo.findByCompanyName(companyName);
+        if (company != null) {
+            return company;
+        } else
+            throw new NullPointerException("The company does not exist");
     }
 }

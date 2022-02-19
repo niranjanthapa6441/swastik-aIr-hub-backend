@@ -5,18 +5,19 @@ import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector.Sector;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Ticket.Ticket;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class SearchFlightDTO {
     private String flightCode;
-    private Date departureDate;
-    private Time departureTime;
-    private Sector sector;
+    private String departureDate;
+    private String departureTime;
+    private String sectorCode;
     private String companyName;
     private String status;
     private List<Ticket> tickets;

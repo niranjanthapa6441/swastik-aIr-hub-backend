@@ -3,6 +3,8 @@ package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/flight")
 public class FlightController {
@@ -30,4 +32,8 @@ public class FlightController {
         return service.delete(id);
     }
 
+    @PostMapping("/searchFlights")
+    public List<SearchFlightDTO> findAvailableFlights(@RequestBody SearchFlightRequest request){
+        return service.searchFlight(request);
+    }
 }

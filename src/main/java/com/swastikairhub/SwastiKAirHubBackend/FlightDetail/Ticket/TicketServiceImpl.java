@@ -65,7 +65,7 @@ public class TicketServiceImpl implements  TicketService{
         return  ticket;
     }
     private TicketDTO toTicketDTO(Ticket ticket) {
-        return TicketDTO.builder().
+        return TicketDTO.builder().id(ticket.getId()).
                 price(ticket.getPrice()).Status(ticket.getStatus()).ticketCode(ticket.getTicketCode()).
                 build();
     }

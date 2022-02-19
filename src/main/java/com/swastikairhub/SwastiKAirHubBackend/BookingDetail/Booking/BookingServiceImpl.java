@@ -28,6 +28,7 @@ public class BookingServiceImpl implements BookingService {
     private TicketRepo ticketRepo;
     @Autowired
     private FlightRepo flightRepo;
+
     @Override
     public Iterable<Booking> findAll() {
         return repo.findAll();
@@ -40,7 +41,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO save(BookingRequest request) {
-        Booking booking=repo.save(toBooking(request));
+        Booking booking = repo.save(toBooking(request));
         return toBookingDTO(booking);
     }
 
@@ -58,28 +59,30 @@ public class BookingServiceImpl implements BookingService {
     public Iterable<Booking> findByCustomerId(String id) {
         return null;
     }
+
     private Booking toBooking(BookingRequest request) {
-        Ticket ticket=ticketRepo.findByTicketCode(request.getTicketCode());
+        Ticket ticket = ticketRepo.findByTicketCode(request.getTicketCode());
         if (ticket == null)
             throw new NullPointerException("The Ticked Does not Exist");
-        FlightDetail flightDetail=flightRepo.findByFlightCode(request.getFlightCode());
+        FlightDetail flightDetail = flightRepo.findByFlightCode(request.getFlightCode());
         if (flightDetail == null)
-            throw  new NullPointerException("The detail of the flight does not exist");
-        FlightTicket flightTicket=flightTicketRepo.findFlightTicket(flightDetail,ticket);
+            throw new NullPointerException("The detail of the flight does not exist");
+        FlightTicket flightTicket = flightTicketRepo.findFlightTicket(flightDetail, ticket);
         if (flightTicket == null)
-            throw  new NullPointerException("The ticket for the flight does not exist");
-        Optional<Customer> findCustomer=customerRepo.findById(request.getCustomerId());
+            throw new NullPointerException("The ticket for the flight does not exist");
+        Optional<Customer> findCustomer = customerRepo.findById(request.getCustomerId());
         if (findCustomer.isEmpty())
-            throw  new NullPointerException("The Customer Does not Exist");
+            throw new NullPointerException("The Customer Does not Exist");
 
-        Booking booking=new Booking();
+        Booking booking = new Booking();
         booking.setBookingDate(LocalDate.now());
         booking.setBookingTime(LocalTime.now());
         booking.setCustomer(findCustomer.get());
         booking.setFlightTicket(flightTicket);
-        booking.setStatus("BOOKED");
+        booking.setStatus(request.getStatus());
         return booking;
     }
+
     private BookingDTO toBookingDTO(Booking booking) {
         return BookingDTO.builder().
                 id(booking.getId()).
@@ -87,5 +90,6 @@ public class BookingServiceImpl implements BookingService {
                 bookingTime(String.valueOf(booking.getBookingTime())).
                 customer(booking.getCustomer()).
                 flightTicket(booking.getFlightTicket()).
-                status(booking.getStatus()).build();}
+                status(booking.getStatus()).build();
+    }
 }

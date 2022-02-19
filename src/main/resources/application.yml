@@ -10,7 +10,8 @@ spring:
       hibernate:
           format_sql: true
           dialect: org.hibernate.dialect.PostgreSQL81Dialect
-    show-sql: true
+    show-sql: false
+    open-in-view: false
 server:
   servlet:
     context-path: /swastikairhub/api/v1

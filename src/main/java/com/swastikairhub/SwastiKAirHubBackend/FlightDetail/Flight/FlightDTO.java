@@ -13,7 +13,7 @@ import java.util.Date;
 public class FlightDTO {
     private String id;
     private String flightCode;
-    private Date departureDate;
+    private String departureDate;
     private String departureTime;
     private Sector sector;
     private AirlineCompany company;

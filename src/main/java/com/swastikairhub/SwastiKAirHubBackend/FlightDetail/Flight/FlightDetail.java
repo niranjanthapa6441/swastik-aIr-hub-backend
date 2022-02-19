@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -23,7 +24,7 @@ public class FlightDetail {
     private String flightCode;
 
     @Column(name = "departure_date")
-    private Date departureDate;
+    private LocalDate departureDate;
 
     @Column(name = "departure_time")
     private String departureTime;
