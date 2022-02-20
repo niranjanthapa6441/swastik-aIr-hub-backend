@@ -24,19 +24,19 @@ public class FlightController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable String id,@Valid @RequestBody FlightDetailRequest request){
-        return RestResponse.ok(service.update(id,request));
+        return RestResponse.ok(service.update(id,request),"Flight Details Updated");
     }
     @PostMapping
     public ResponseEntity<Object> save(@Valid @RequestBody FlightDetailRequest request){
-        return RestResponse.ok(service.save(request));
+        return RestResponse.ok(service.save(request),"FLight Details Saved");
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable String id){
-        return RestResponse.ok(service.delete(id));
+        return RestResponse.ok(service.delete(id),"Flight Details Saved");
     }
 
     @PostMapping("/searchFlights")
     public ResponseEntity<Object> findAvailableFlights(@Valid @RequestBody SearchFlightRequest request){
-        return RestResponse.ok(service.searchFlight(request));
+        return RestResponse.ok(service.searchFlight(request),"Found FLights");
     }
 }

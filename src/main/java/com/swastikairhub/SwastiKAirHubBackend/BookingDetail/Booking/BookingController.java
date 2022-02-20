@@ -21,11 +21,11 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<Object> save(@Valid @RequestBody BookingRequest request) {
-        return ResponseEntity.ok(service.save(request));
+        return RestResponse.ok(service.save(request),"Booking Details Saved");
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody BookingRequest request) {
-        return RestResponse.ok(service.update(id, request));
+        return RestResponse.ok(service.update(id, request),"Booking Details Updated");
     }
 
     @GetMapping("/{id}")
@@ -35,7 +35,7 @@ public class BookingController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable String id) {
-        return RestResponse.ok(service.delete(id));
+        return RestResponse.ok(service.delete(id),"Booking Details Cancelled");
     }
 
     @GetMapping("/customer/{id}")

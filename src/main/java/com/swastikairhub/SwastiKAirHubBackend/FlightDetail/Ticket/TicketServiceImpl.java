@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Ticket;
 
+import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class TicketServiceImpl implements  TicketService{
 
     @Override
     public TicketDTO save(TicketRequest request) {
+        checkValidation(request);
         ticket= repo.save(toTicket(request));
         return toTicketDTO(ticket);
     }
@@ -34,6 +36,7 @@ public class TicketServiceImpl implements  TicketService{
 
     @Override
     public TicketDTO update(int id, TicketRequest request) {
+        checkValidation(request);
         Optional<Ticket> findTicket=repo.findById(id);
         if (findTicket.isPresent()){
             Ticket updateTicket= toTicket(request);
@@ -68,6 +71,11 @@ public class TicketServiceImpl implements  TicketService{
         return TicketDTO.builder().id(ticket.getId()).
                 price(ticket.getPrice()).Status(ticket.getStatus()).ticketCode(ticket.getTicketCode()).
                 build();
+    }
+    private void checkValidation(TicketRequest request) {
+        Ticket ticket=repo.findByTicketCode(request.getTicketCode());
+        if (ticket!=null)
+            throw new CustomException(CustomException.Type.TICKET_CODE_ALREADY_EXIST);
     }
 
 }

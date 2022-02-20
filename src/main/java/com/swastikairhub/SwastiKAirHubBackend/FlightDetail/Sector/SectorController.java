@@ -14,7 +14,7 @@ public class SectorController {
     private SectorService service;
     @PostMapping
     private ResponseEntity<Object> save(@Valid @RequestBody SectorRequest request){
-        return RestResponse.ok(service.save(request));
+        return RestResponse.ok(service.save(request),"Sector Details Saved");
     }
     @GetMapping
     private ResponseEntity<Object> getAll(){
@@ -26,10 +26,10 @@ public class SectorController {
     }
     @PutMapping("/{id}")
     private ResponseEntity<Object> update(@PathVariable String id,@Valid @RequestBody SectorRequest request){
-        return RestResponse.ok(service.update(id,request));
+        return RestResponse.ok(service.update(id,request),"Sector Details Updated");
     }
     @DeleteMapping("/{id}")
     private ResponseEntity<Object> update(@PathVariable String id){
-        return RestResponse.ok(service.delete(id));
+        return RestResponse.ok(service.delete(id),"Sector Details Deleted");
     }
 }

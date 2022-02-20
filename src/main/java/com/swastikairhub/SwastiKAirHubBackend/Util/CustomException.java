@@ -24,7 +24,8 @@ public class CustomException extends RuntimeException {
         COMPANY_ALREADY_ADDED("Company is already added",400),
         PHONE_NUMBER_ALREADY_EXISTS("Phone Number already exists",400),
         FLIGHT_CODE_ALREADY_EXIST("Flight Code Already Exists", 400),
-        SECTOR_ALREADY_EXISTS("Sector Code is already Preseant", 400);
+        SECTOR_ALREADY_EXISTS("Sector Code is already Preseant", 400),
+        TICKET_CODE_ALREADY_EXIST("Ticket Code Already Taken",400 );
         private String message;
         private int code;
 
