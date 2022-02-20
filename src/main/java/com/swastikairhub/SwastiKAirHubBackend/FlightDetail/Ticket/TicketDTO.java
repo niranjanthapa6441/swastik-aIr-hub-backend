@@ -10,7 +10,7 @@ import lombok.Data;
 public class TicketDTO {
     private int id;
     private String ticketCode;
-    private String price;
+    private int price;
     private String Status;
     private CancellationPolicy cancellationPolicy;
     private BaggagePolicy baggagePolicy;

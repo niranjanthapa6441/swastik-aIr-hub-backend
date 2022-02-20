@@ -1,8 +1,11 @@
 package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight;
 
+import com.swastikairhub.SwastiKAirHubBackend.Util.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -12,28 +15,28 @@ public class FlightController {
     private FlightService service;
 
     @GetMapping
-    public Iterable<FlightDetail> findAll(){
-        return service.findAll();
+    public ResponseEntity<Object> findAll(){
+        return RestResponse.ok(service.findAll());
     }
     @GetMapping("/{flightCode}")
-    public FlightDTO findById(@PathVariable String flightCode){
-        return  service.findByFlightCode(flightCode);
+    public ResponseEntity<Object> findById(@PathVariable String flightCode){
+        return  RestResponse.ok(service.findByFlightCode(flightCode));
     }
     @PutMapping("/{id}")
-    public FlightDTO update(@PathVariable String id, @RequestBody FlightDetailRequest request){
-        return service.update(id,request);
+    public ResponseEntity<Object> update(@PathVariable String id,@Valid @RequestBody FlightDetailRequest request){
+        return RestResponse.ok(service.update(id,request));
     }
     @PostMapping
-    public FlightDTO save(@RequestBody FlightDetailRequest request){
-        return service.save(request);
+    public ResponseEntity<Object> save(@Valid @RequestBody FlightDetailRequest request){
+        return RestResponse.ok(service.save(request));
     }
     @DeleteMapping("/{id}")
-    public FlightDTO delete(@PathVariable String id){
-        return service.delete(id);
+    public ResponseEntity<Object> delete(@PathVariable String id){
+        return RestResponse.ok(service.delete(id));
     }
 
     @PostMapping("/searchFlights")
-    public List<SearchFlightDTO> findAvailableFlights(@RequestBody SearchFlightRequest request){
-        return service.searchFlight(request);
+    public ResponseEntity<Object> findAvailableFlights(@Valid @RequestBody SearchFlightRequest request){
+        return RestResponse.ok(service.searchFlight(request));
     }
 }

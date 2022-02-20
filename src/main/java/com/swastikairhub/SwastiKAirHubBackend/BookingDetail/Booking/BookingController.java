@@ -1,36 +1,45 @@
 package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 
+import com.swastikairhub.SwastiKAirHubBackend.Util.RestResponse;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
     @Autowired
-    private  BookingService service;
+    private BookingService service;
 
     @GetMapping
-    public Iterable<Booking> findAll(){
-        return service.findAll();
+    public ResponseEntity<Object> findAll() {
+        return RestResponse.ok(service.findAll());
     }
+
     @PostMapping
-    public BookingDTO save(@RequestBody BookingRequest request){
-        return service.save(request);
+    public ResponseEntity<Object> save(@Valid @RequestBody BookingRequest request) {
+        return ResponseEntity.ok(service.save(request));
     }
     @PutMapping("/{id}")
-    public BookingDTO update(@PathVariable String id,@RequestBody BookingRequest request){
-        return service.update(id,request);
+    public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody BookingRequest request) {
+        return RestResponse.ok(service.update(id, request));
     }
+
     @GetMapping("/{id}")
-    public BookingDTO findById(@PathVariable String id){
-        return service.findById(id);
+    public ResponseEntity<Object> findById(@PathVariable String id) {
+        return RestResponse.ok(service.findById(id));
     }
+
     @DeleteMapping("/{id}")
-    public BookingDTO delete(@PathVariable String id){
-        return service.delete(id);
+    public ResponseEntity<Object> delete(@PathVariable String id) {
+        return RestResponse.ok(service.delete(id));
     }
+
     @GetMapping("/customer/{id}")
-    public Iterable<Booking> findByCustomerId(@PathVariable String id){
-        return service.findByCustomerId(id);
+    public ResponseEntity<Object> findByCustomerId(@PathVariable String id) {
+        return RestResponse.ok(service.findByCustomerId(id));
     }
 }

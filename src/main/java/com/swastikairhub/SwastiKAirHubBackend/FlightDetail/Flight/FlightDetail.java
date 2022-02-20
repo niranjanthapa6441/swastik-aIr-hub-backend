@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 
@@ -20,16 +21,16 @@ public class FlightDetail {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
-    @Column(name = "flight_code")
+    @Column(name = "flight_code",nullable = false,unique = true)
     private String flightCode;
 
-    @Column(name = "departure_date")
+    @Column(name = "departure_date",nullable = false)
     private LocalDate departureDate;
 
-    @Column(name = "departure_time")
-    private String departureTime;
+    @Column(name = "departure_time",nullable = false)
+    private LocalTime departureTime;
 
-    @Column(name = "status")
+    @Column(name = "status",nullable = false)
     private String status;
 
     @ManyToOne

@@ -15,9 +15,12 @@ public class Passenger {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "passenger_id")
     private String id;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
     private String middleName;
+    @Column(nullable = false,unique = true)
     private String phoneNumber;
     @ManyToOne
     @JoinColumn(name = "booking_id")

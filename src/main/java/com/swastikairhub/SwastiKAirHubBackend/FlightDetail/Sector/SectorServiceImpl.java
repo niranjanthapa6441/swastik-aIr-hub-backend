@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector;
 
+import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class SectorServiceImpl implements SectorService{
 
     @Override
     public SectorDTO update(String id, SectorRequest request) {
+        checkValidation(request);
         Optional<Sector> sector= repository.findById(id);
         if (sector.isPresent()) {
             Sector updateSector= toSector(request);
@@ -58,7 +60,9 @@ public class SectorServiceImpl implements SectorService{
         }
     }
     private void checkValidation(SectorRequest request) {
-        //todo validation
+        int count=repository.countSectorCode(request.getSectorCode());
+        if (count>0)
+            throw new CustomException(CustomException.Type.SECTOR_ALREADY_EXISTS);
     }
     private SectorDTO toSectorDTO(Sector sector) {
         return SectorDTO.builder()

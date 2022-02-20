@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class SearchFlightRequest {
+
     private String sectorCode;
     private String departureDate;
     private String arrivalDate;

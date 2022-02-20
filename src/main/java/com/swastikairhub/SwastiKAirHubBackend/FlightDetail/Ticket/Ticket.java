@@ -19,7 +19,10 @@ public class Ticket {
             generator="ticket_sequence"
     )
     private int id;
+    @Column(name = "ticket_code",nullable = false,unique = true)
     private String ticketCode;
-    private String price;
+    @Column(nullable = false)
+    private int price;
+    @Column(nullable = false)
     private String Status;
 }
