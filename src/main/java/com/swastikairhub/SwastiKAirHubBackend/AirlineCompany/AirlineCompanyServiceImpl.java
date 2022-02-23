@@ -4,6 +4,7 @@ import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +29,10 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService{
 
     @Override
     public Iterable<AirlineCompany> findAll() {
-        return repository.findAll();
+        List<AirlineCompany> companies=repository.findAll();
+        if (companies.isEmpty())
+            throw new NullPointerException("Companies are not added");
+        return companies;
     }
 
     @Override

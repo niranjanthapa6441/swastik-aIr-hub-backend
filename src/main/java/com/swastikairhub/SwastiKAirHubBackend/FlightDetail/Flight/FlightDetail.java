@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swastikairhub.SwastiKAirHubBackend.AirlineCompany.AirlineCompany;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Sector.Sector;
 import lombok.Data;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -28,10 +30,10 @@ public class FlightDetail {
     private LocalDate departureDate;
 
     @Column(name = "departure_time",nullable = false)
-    private LocalTime departureTime;
+    private String departureTime;
 
-    @Column(name = "status",nullable = false)
-    private String status;
+    @Column(name = "number_of_available_seats",nullable = false)
+    private int numberOfAvailableSeats;
 
     @ManyToOne
     @JoinColumn(name = "sector_id")
@@ -39,6 +41,9 @@ public class FlightDetail {
 
     @ManyToOne
     @JoinColumn
-    private AirlineCompany Company;
+    private AirlineCompany company;
+
+    @Column(name = "status",nullable = false)
+    private String status;
 
 }

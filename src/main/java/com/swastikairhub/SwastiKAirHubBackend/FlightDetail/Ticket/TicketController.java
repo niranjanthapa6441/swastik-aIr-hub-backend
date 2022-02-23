@@ -2,6 +2,7 @@ package com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Ticket;
 
 import com.swastikairhub.SwastiKAirHubBackend.Util.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,20 +19,20 @@ public class TicketController {
         return RestResponse.ok(ticketService.findAll());
     }
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> save(@Valid @RequestBody TicketRequest request) {
         return RestResponse.ok(ticketService.save(request),"Ticket Details Saved");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> update(@PathVariable int id,@Valid @RequestBody TicketRequest request) {
         return RestResponse.ok(ticketService.update(id, request),"Ticket Details Updated");
     }
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findBYId(@PathVariable int id){
         return RestResponse.ok(ticketService.findTicketByID(id));
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> delete(@PathVariable int id){
         return RestResponse.ok(ticketService.delete(id),"Ticket Details deleted");
     }

@@ -3,6 +3,7 @@ package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 import com.swastikairhub.SwastiKAirHubBackend.Util.RestResponse;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,31 +15,31 @@ public class BookingController {
     @Autowired
     private BookingService service;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAll() {
         return RestResponse.ok(service.findAll());
     }
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> save(@Valid @RequestBody BookingRequest request) {
         return RestResponse.ok(service.save(request),"Booking Details Saved");
     }
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody BookingRequest request) {
         return RestResponse.ok(service.update(id, request),"Booking Details Updated");
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findById(@PathVariable String id) {
         return RestResponse.ok(service.findById(id));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> delete(@PathVariable String id) {
         return RestResponse.ok(service.delete(id),"Booking Details Cancelled");
     }
 
-    @GetMapping("/customer/{id}")
+    @GetMapping(value = "/customer/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findByCustomerId(@PathVariable String id) {
         return RestResponse.ok(service.findByCustomerId(id));
     }

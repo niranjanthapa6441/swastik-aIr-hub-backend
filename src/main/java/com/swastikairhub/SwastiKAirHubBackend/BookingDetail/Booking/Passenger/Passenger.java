@@ -20,7 +20,7 @@ public class Passenger {
     @Column(nullable = false)
     private String lastName;
     private String middleName;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String phoneNumber;
     @ManyToOne
     @JoinColumn(name = "booking_id")

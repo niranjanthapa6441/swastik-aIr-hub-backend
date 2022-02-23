@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -17,8 +19,8 @@ public interface FlightRepo extends JpaRepository<FlightDetail,String> {
     @Query("SELECT ea FROM FlightDetail ea where ea.sector=?1 and ea.departureDate=?2")
     List<FlightDetail> findFlightBySectorAndDate(Sector sector,LocalDate date);
 
-    @Query("SELECT count(*) FROM FlightDetail ea where ea.sector=?1 and ea.company=?2 and ea.departureDate=?3 and ea.departureTime=?2" )
-    int findFlightBySectorDateAndTime(Sector sector, AirlineCompany company, LocalDate date, LocalTime time);
+    @Query("SELECT count(*) FROM FlightDetail ea where ea.sector=?1 and ea.company=?2 and ea.departureDate=?3 and ea.departureTime=?4" )
+    int findFlightBySectorDateAndTime(Sector sector, AirlineCompany company, LocalDate date, String time);
 
     @Query("SELECT count(*) FROM FlightDetail fd where fd.flightCode=?1")
     int countFlightCode(String flightCode);

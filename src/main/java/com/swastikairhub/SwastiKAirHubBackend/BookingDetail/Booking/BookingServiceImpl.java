@@ -49,6 +49,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingDTO save(BookingRequest request) {
         Booking booking = repo.save(toBooking(request));
+        toPassengers(booking,request.getPassengerList());
         return toBookingDTO(booking);
     }
 
@@ -82,7 +83,6 @@ public class BookingServiceImpl implements BookingService {
         FlightTicket flightTicket = getFlightTicket(ticket, flightDetail);
         Optional<Customer> findCustomer = getCustomer(request);
         Booking booking = getBooking(request, flightTicket, findCustomer);
-        toPassengers(booking,request.getPassengerList());
         return booking;
     }
 
@@ -136,8 +136,8 @@ public class BookingServiceImpl implements BookingService {
         Passenger passenger= new Passenger();
         passenger.setFirstName(passengerRequest.getFirstName());
         passenger.setMiddleName(passengerRequest.getLastName());
-        passenger.setLastName(passenger.getLastName());
-        passenger.setPhoneNumber(passenger.getPhoneNumber());
+        passenger.setLastName(passengerRequest.getLastName());
+        passenger.setPhoneNumber(passengerRequest.getPhoneNumber());
         passenger.setBooking(booking);
         return passenger;
     }

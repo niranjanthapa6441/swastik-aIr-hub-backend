@@ -9,4 +9,5 @@ public interface CustomerService {
     CustomerDTO update(String id,CustomerRequest request);
     CustomerDTO delete(String id);
     CustomerDTO findById(String id);
+    LoginDTO login(LoginRequest request);
 }

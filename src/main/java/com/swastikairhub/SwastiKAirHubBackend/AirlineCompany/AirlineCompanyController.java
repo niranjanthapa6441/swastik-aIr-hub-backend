@@ -16,7 +16,7 @@ public class AirlineCompanyController {
 
     @GetMapping
     public ResponseEntity<Object> getAll(){
-        return RestResponse.ok(service.findAll());
+        return RestResponse.ok(service.findAll(),"All the data");
     }
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addCompany(@Valid @RequestBody AirlineCompanyRequest request){

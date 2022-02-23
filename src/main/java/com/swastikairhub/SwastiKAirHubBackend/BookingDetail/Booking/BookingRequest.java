@@ -21,10 +21,8 @@ public class BookingRequest {
     private String ticketCode;
     @NotBlank(message = "The customer id should not be empty")
     private String customerId;
-    @NotBlank(message = "The number of traveller should not be empty")
     private int numberOfTraveller;
     @NotBlank(message = "The status should not be empty")
     private String status;
-    @NotBlank(message = "The passenger list should not be empty")
     private List<PassengerRequest> passengerList;
 }

@@ -12,8 +12,11 @@ import com.swastikairhub.SwastiKAirHubBackend.Util.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -113,14 +116,24 @@ public class FlightServiceImpl implements FlightService {
     private FlightDetail toFlightDetail(FlightDetailRequest request) {
         DateTimeFormatter dateFormatter = new DateTimeFormatter();
         LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
-        LocalTime time=dateFormatter.formatTime(request.getDepartureTime());
+        LocalDateTime departureTime=dateFormatter.formatLocalDateTime(request.getDepartureTime());
+        System.out.println(LocalDate.now());
+        System.out.println(date);
+        LocalTime parseTime=LocalTime.parse("01:15");
+        System.out.println(parseTime);
+        if (LocalDate.now().isEqual(date)){System.out.println(LocalTime.now().plusHours(2));
+            LocalTime time=LocalTime.now().plusHours(2);
+            Long totalHours = ChronoUnit.HOURS.between(LocalTime.now().plusHours(1),parseTime);
+            System.out.println(totalHours);
+        }
+
         FlightDetail flightDetail = new FlightDetail();
         flightDetail.setFlightCode(request.getFlightCode());
         flightDetail.setStatus(request.getStatus());
         flightDetail.setCompany(toCompany(request.getCompanyName()));
         flightDetail.setDepartureDate(date);
         flightDetail.setSector(toSector(request.getSectorCode()));
-        flightDetail.setDepartureTime(time);
+        flightDetail.setDepartureTime(request.getDepartureTime());
         return flightDetail;
     }
 
@@ -166,8 +179,7 @@ public class FlightServiceImpl implements FlightService {
         AirlineCompany company=toCompany(request.getCompanyName());
         DateTimeFormatter dateFormatter = new DateTimeFormatter();
         LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
-        LocalTime time=dateFormatter.formatTime(request.getDepartureTime());
-        int count=flightRepo.findFlightBySectorDateAndTime(sector,company,date,time);
+        int count=flightRepo.findFlightBySectorDateAndTime(sector,company,date,request.getDepartureTime());
         if (count > 0)
             throw new CustomException(CustomException.Type.FLIGHT_ALREADY_EXIST);
     }

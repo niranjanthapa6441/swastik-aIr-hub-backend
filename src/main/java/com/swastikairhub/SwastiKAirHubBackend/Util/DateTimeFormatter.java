@@ -2,9 +2,8 @@ package com.swastikairhub.SwastiKAirHubBackend.Util;
 
 import lombok.Data;
 
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Data
 public class DateTimeFormatter {
@@ -36,21 +35,9 @@ public class DateTimeFormatter {
             throw new CustomException(CustomException.Type.DATE_INVALID);
         }
     }
-    public LocalTime formatTime(String time){
-        java.time.format.DateTimeFormatter format
-                = java.time.format.DateTimeFormatter.ofPattern("HH:mm");
-        try{
-         LocalTime formattedTime=getTimeFromString(time,format);
-         return formattedTime;
-        }
-        catch (IllegalArgumentException e){
-            throw new
-                    CustomException(CustomException.Type.TIME_INVALID);
-        }
-    }
-
-    private LocalTime getTimeFromString(String time, java.time.format.DateTimeFormatter format) {
-        LocalTime localTime=LocalTime.parse(time,format);
-        return localTime;
+    public LocalDateTime formatLocalDateTime(String string){
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+        LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
+        return dateTime;
     }
 }
