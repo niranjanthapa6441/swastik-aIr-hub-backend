@@ -1,7 +1,6 @@
-package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger;
+package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger;
 
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Booking;
-import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Ticket.TicketDTO;
 import org.springframework.stereotype.Service;
 
 @Service

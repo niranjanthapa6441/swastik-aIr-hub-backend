@@ -1,13 +1,8 @@
-package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger;
+package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger;
 
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 public class PassengerServiceImpl implements PassengerService {

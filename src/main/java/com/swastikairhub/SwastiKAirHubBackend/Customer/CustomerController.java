@@ -15,8 +15,8 @@ public class CustomerController {
     private CustomerService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Customer> findAll(){
-        return service.findAll();
+    public ResponseEntity<Object> findAll(){
+        return RestResponse.ok(service.findAll());
     }
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerDTO findById(@PathVariable String id){

@@ -14,6 +14,7 @@ public class HelperUtil {
             Collection<?> collection = (Collection<?>) obj;
             Class genericClass = null;
             Iterator it = collection.iterator();
+            System.out.println("asdfsdfasdfasdfasdfasdfasdf");
             if (it.hasNext()) {
                 genericClass = it.next().getClass();
             }
@@ -34,6 +35,7 @@ public class HelperUtil {
                 });
                 return collection;
             }
+
         }
         for (Field field : fields) {
             try {

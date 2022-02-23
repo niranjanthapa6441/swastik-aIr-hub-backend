@@ -1,4 +1,4 @@
-package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger;
+package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

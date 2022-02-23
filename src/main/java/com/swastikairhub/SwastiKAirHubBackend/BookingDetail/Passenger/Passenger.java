@@ -1,4 +1,4 @@
-package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger;
+package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger;
 
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Booking;
 import lombok.Data;

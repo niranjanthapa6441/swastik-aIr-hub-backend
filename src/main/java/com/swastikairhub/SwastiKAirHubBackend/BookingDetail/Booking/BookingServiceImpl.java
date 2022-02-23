@@ -1,9 +1,8 @@
 package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
-import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger.Passenger;
-import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger.PassengerRepo;
-import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking.Passenger.PassengerRequest;
+import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.Passenger;
+import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.PassengerRepo;
+import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.PassengerRequest;
 import com.swastikairhub.SwastiKAirHubBackend.Customer.Customer;
 import com.swastikairhub.SwastiKAirHubBackend.Customer.CustomerRepo;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight.FlightDetail;

@@ -4,10 +4,12 @@ import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight.FlightDetail;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight.FlightRepo;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Ticket.Ticket;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Ticket.TicketRepo;
+import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FlightTicketServiceImpl implements FlightTicketService{
@@ -29,9 +31,18 @@ public class FlightTicketServiceImpl implements FlightTicketService{
 
     @Override
     public FlightTicketDTO save(FlightTicketRequest request) {
+        checkValidation(request);
         FlightTicket flightTicket=toFlight(request);
         FlightTicket savedFlightTicket=repo.save(flightTicket);
         return toFlightTicketDTO(savedFlightTicket);
+    }
+
+    private void checkValidation(FlightTicketRequest request) {
+        Ticket ticket=ticketRepo.findByTicketCode(request.getTicketCode());
+        FlightDetail detail=flightRepo.findByFlightCode(request.getFlightCode());
+        FlightTicket flightTicket=repo.findFlightTicket(detail,ticket);
+        if (flightTicket!=null)
+            throw new CustomException(CustomException.Type.TICKET_FOR_FLIGHT_ALREARY_EXISTS);
     }
 
     private FlightTicketDTO toFlightTicketDTO(FlightTicket flightTicket) {

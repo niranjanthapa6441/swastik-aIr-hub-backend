@@ -86,6 +86,9 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setLastName(request.getLastName());
         customer.setMiddleName(request.getMiddleName());
         customer.setPhoneNumber(request.getPhoneNumber());
+        customer.setUsername(request.getUsername());
+        customer.setPassword(request.getPassword());
+        customer.setStatus("Registered");
         return customer;
     }
     private void checkValidation(CustomerRequest request) {

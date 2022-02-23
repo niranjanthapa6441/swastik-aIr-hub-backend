@@ -4,6 +4,7 @@ import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class TicketServiceImpl implements  TicketService{
@@ -31,6 +32,9 @@ public class TicketServiceImpl implements  TicketService{
 
     @Override
     public Iterable<Ticket> findAll() {
+        List<Ticket> ticketList=repo.findAll();
+        if (ticketList.isEmpty())
+            throw new  NullPointerException("The Ticket List is empty");
         return repo.findAll();
     }
 
