@@ -34,6 +34,7 @@ public class AirlineCompany {
 
     @Column(nullable = false)
     public String contractDate;
+
     @Column(nullable = false)
     public String contractStatus;
 }

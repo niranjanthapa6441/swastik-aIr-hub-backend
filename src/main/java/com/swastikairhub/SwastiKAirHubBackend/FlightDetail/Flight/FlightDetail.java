@@ -40,7 +40,7 @@ public class FlightDetail {
     private Sector sector;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "company_id")
     private AirlineCompany company;
 
     @Column(name = "status",nullable = false)

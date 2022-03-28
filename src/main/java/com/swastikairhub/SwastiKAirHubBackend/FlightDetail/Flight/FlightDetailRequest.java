@@ -10,6 +10,7 @@ import lombok.Data;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -29,4 +30,6 @@ public class FlightDetailRequest {
     private String sectorCode;
     @NotBlank( message = "The company name should not be empty")
     private String companyName;
+    @NotNull( message = "The avaiilable seats should not be empty")
+    private int availableSeats;
 }

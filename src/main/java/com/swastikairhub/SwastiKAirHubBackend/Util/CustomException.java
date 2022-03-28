@@ -27,7 +27,8 @@ public class CustomException extends RuntimeException {
         SECTOR_ALREADY_EXISTS("Sector Code is already Preseant", 400),
         TICKET_CODE_ALREADY_EXIST("Ticket Code Already Taken",400 ), EMAIL_ALREADY_EXITS("Email ALready Exists", 400), INVALID_DETAILS("Invalid Credentials Provided", 401),
         USERNAME_ALREADY_EXIST("Username already Exists", 400),
-        TICKET_FOR_FLIGHT_ALREARY_EXISTS("Ticket has already been assigned to the flight",400 );
+        TICKET_FOR_FLIGHT_ALREARY_EXISTS("Ticket has already been assigned to the flight",400 ),
+        INVALID_NUMBER_OF_TRAVELLERS("The number of travlleres should not be zero",400 );
         private String message;
         private int code;
 

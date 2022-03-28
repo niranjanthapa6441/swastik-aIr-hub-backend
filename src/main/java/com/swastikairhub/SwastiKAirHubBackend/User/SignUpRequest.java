@@ -1,4 +1,4 @@
-package com.swastikairhub.SwastiKAirHubBackend.Customer;
+package com.swastikairhub.SwastiKAirHubBackend.User;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-public class CustomerRequest {
+public class SignUpRequest {
     @NotBlank(message = "First Name should not be empty")
     private String firstName;
     @NotBlank(message = "last Name should not be empty")

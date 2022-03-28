@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 @Slf4j
 public class HelperUtil {
@@ -14,7 +15,6 @@ public class HelperUtil {
             Collection<?> collection = (Collection<?>) obj;
             Class genericClass = null;
             Iterator it = collection.iterator();
-            System.out.println("asdfsdfasdfasdfasdfasdfasdf");
             if (it.hasNext()) {
                 genericClass = it.next().getClass();
             }

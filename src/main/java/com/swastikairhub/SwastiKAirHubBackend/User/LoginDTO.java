@@ -1,4 +1,4 @@
-package com.swastikairhub.SwastiKAirHubBackend.Customer;
+package com.swastikairhub.SwastiKAirHubBackend.User;
 
 import lombok.Builder;
 import lombok.Data;

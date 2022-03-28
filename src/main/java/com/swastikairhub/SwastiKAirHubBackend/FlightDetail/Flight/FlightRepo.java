@@ -16,8 +16,8 @@ import java.util.List;
 public interface FlightRepo extends JpaRepository<FlightDetail,String> {
     @Query("SELECT fd FROM FlightDetail fd where fd.flightCode=?1")
     FlightDetail findByFlightCode(String flightCode);
-    @Query("SELECT ea FROM FlightDetail ea where ea.sector=?1 and ea.departureDate=?2")
-    List<FlightDetail> findFlightBySectorAndDate(Sector sector,LocalDate date);
+    @Query("SELECT ea FROM FlightDetail ea where ea.sector=?1 and ea.departureDate=?2 and ea.numberOfAvailableSeats >= ?3")
+    List<FlightDetail> findFlightBySectorAndDate(Sector sector,LocalDate date,int numberOfTraveller);
 
     @Query("SELECT count(*) FROM FlightDetail ea where ea.sector=?1 and ea.company=?2 and ea.departureDate=?3 and ea.departureTime=?4" )
     int findFlightBySectorDateAndTime(Sector sector, AirlineCompany company, LocalDate date, String time);

@@ -35,7 +35,6 @@ public class FlightController {
     public ResponseEntity<Object> delete(@PathVariable String id){
         return RestResponse.ok(service.delete(id),"Flight Details Saved");
     }
-
     @PostMapping(value = "/searchFlights",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAvailableFlights(@Valid @RequestBody SearchFlightRequest request){
         return RestResponse.ok(service.searchFlight(request),"Found FLights");

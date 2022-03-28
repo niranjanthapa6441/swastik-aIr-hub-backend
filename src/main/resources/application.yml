@@ -5,7 +5,7 @@ spring:
     password: 6441
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
           format_sql: true
@@ -16,3 +16,8 @@ server:
   servlet:
     context-path: /swastikairhub/api/v1
   port: 8083
+bezkoder:
+  app:
+    jwtCookieName: bezkoder
+    jwtSecret: bezKoderSecretKey
+    jwtExpirationMs: 86400000

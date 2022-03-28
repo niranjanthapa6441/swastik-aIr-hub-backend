@@ -29,7 +29,7 @@ public class BookingController {
         return RestResponse.ok(service.update(id, request),"Booking Details Updated");
     }
 
-    @GetMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findById(@PathVariable String id) {
         return RestResponse.ok(service.findById(id));
     }
@@ -39,7 +39,7 @@ public class BookingController {
         return RestResponse.ok(service.delete(id),"Booking Details Cancelled");
     }
 
-    @GetMapping(value = "/customer/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/customer/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findByCustomerId(@PathVariable String id) {
         return RestResponse.ok(service.findByCustomerId(id));
     }

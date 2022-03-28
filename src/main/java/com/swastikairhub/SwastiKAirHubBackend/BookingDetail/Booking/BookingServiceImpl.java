@@ -3,8 +3,8 @@ package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.Passenger;
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.PassengerRepo;
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.PassengerRequest;
-import com.swastikairhub.SwastiKAirHubBackend.Customer.Customer;
-import com.swastikairhub.SwastiKAirHubBackend.Customer.CustomerRepo;
+import com.swastikairhub.SwastiKAirHubBackend.User.User;
+import com.swastikairhub.SwastiKAirHubBackend.User.UserRepo;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight.FlightDetail;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight.FlightRepo;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.FlightTicket.FlightTicket;
@@ -25,7 +25,7 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepo repo;
     @Autowired
-    private CustomerRepo customerRepo;
+    private UserRepo userRepo;
     @Autowired
     private FlightTicketRepo flightTicketRepo;
     @Autowired
@@ -69,7 +69,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Iterable<Booking> findByCustomerId(String id) {
-        Optional<Customer> customer= customerRepo.findById(id);
+        Optional<User> customer= userRepo.findById(id);
         if (customer.isEmpty())
             throw new NullPointerException("The Customer Doesn't exist");
         Iterable<Booking> bookings=repo.findBookingByCustomerId(customer);
@@ -80,12 +80,12 @@ public class BookingServiceImpl implements BookingService {
         Ticket ticket = getTicket(request);
         FlightDetail flightDetail = getFlightDetail(request);
         FlightTicket flightTicket = getFlightTicket(ticket, flightDetail);
-        Optional<Customer> findCustomer = getCustomer(request);
+        Optional<User> findCustomer = getCustomer(request);
         Booking booking = getBooking(request, flightTicket, findCustomer);
         return booking;
     }
 
-    private Booking getBooking(BookingRequest request, FlightTicket flightTicket, Optional<Customer> findCustomer) {
+    private Booking getBooking(BookingRequest request, FlightTicket flightTicket, Optional<User> findCustomer) {
         Booking booking = new Booking();
         booking.setBookingDate(LocalDate.now());
         booking.setBookingTime(LocalTime.now());
@@ -116,8 +116,8 @@ public class BookingServiceImpl implements BookingService {
         return flightTicket;
     }
 
-    private Optional<Customer> getCustomer(BookingRequest request) {
-        Optional<Customer> findCustomer = customerRepo.findById(request.getCustomerId());
+    private Optional<User> getCustomer(BookingRequest request) {
+        Optional<User> findCustomer = userRepo.findById(request.getCustomerId());
         if (findCustomer.isEmpty())
             throw new NullPointerException("The Customer Does not Exist");
         return findCustomer;
@@ -142,12 +142,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private BookingDTO toBookingDTO(Booking booking) {
+        List<Passenger> passengers=passengerRepo.findPassengerByBookingId(booking);
         return BookingDTO.builder().
                 id(booking.getId()).
                 bookingDate(String.valueOf(booking.getBookingDate())).
                 bookingTime(String.valueOf(booking.getBookingTime())).
                 customer(booking.getCustomer()).
                 flightTicket(booking.getFlightTicket()).
+                passengerList(passengers).
                 status(booking.getStatus()).build();
     }
     private BookingDTO toFindByBookingIdDTO(Booking booking, List<Passenger> passengers) {

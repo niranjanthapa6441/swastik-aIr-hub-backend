@@ -12,12 +12,14 @@ import com.swastikairhub.SwastiKAirHubBackend.Util.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,8 +87,11 @@ public class FlightServiceImpl implements FlightService {
         DateTimeFormatter dateFormatter = new DateTimeFormatter();
         LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
         Sector sector = toSector(request.getSectorCode());
-        List<FlightDetail> searchFlights = toSearchFlight(sector,date);
+        List<FlightDetail> searchFlights = toSearchFlight(sector, date, request.getNumberOfTraveller());
         List<SearchFlightDTO> searchFlightDTOS = getSearchFlightDTOS(searchFlights);
+        if (searchFlightDTOS.isEmpty()){
+            throw new NullPointerException("Flights for sector "+request.getSectorCode()+"and departure date "+request.getDepartureDate()+"does not exist");
+        }
         return searchFlightDTOS;
     }
 
@@ -95,28 +100,57 @@ public class FlightServiceImpl implements FlightService {
         for (FlightDetail detail : searchFlights
         ) {
             List<Ticket> flightTickets = flightTicketRepo.findFlightTicketByFlight(detail);
-            SearchFlightDTO searchFlightDTO = getSearchFlightDTO(detail, flightTickets);
-            searchFlightDTOS.add(searchFlightDTO);
+            for (Ticket ticket:flightTickets
+                 ) {
+                SearchFlightDTO searchFlightDTO=toSearchFlightDTO(detail,ticket);
+                searchFlightDTOS.add(searchFlightDTO);
+            }
+            /*SearchFlightDTO searchFlightDTO = getSearchFlightDTO(detail, flightTickets);*/
         }
-        return searchFlightDTOS;
+
+        List<SearchFlightDTO> listOfFlights = getFlightDTOS(sortByTicketPriceAsc(searchFlightDTOS));
+        return listOfFlights;
     }
 
-    private SearchFlightDTO getSearchFlightDTO(FlightDetail detail, List<Ticket> flightTickets) {
-        SearchFlightDTO searchFlightDTO= new SearchFlightDTO();
+    private SearchFlightDTO toSearchFlightDTO(FlightDetail detail, Ticket ticket) {
+        SearchFlightDTO searchFlightDTO = new SearchFlightDTO();
         searchFlightDTO.setCompanyName(detail.getCompany().getName());
         searchFlightDTO.setFlightCode(detail.getFlightCode());
-        searchFlightDTO.setSectorCode(detail.getSector().getSectorCode());
+        searchFlightDTO.setSector(detail.getSector());
         searchFlightDTO.setDepartureDate(String.valueOf(detail.getDepartureDate()));
         searchFlightDTO.setDepartureTime(String.valueOf(detail.getDepartureTime()));
         searchFlightDTO.setStatus(detail.getStatus());
-        searchFlightDTO.setTickets(flightTickets);
+        searchFlightDTO.setTicket(ticket);
         return searchFlightDTO;
     }
+
+    private List<SearchFlightDTO> getFlightDTOS(List<SearchFlightDTO> searchFlightDTOS) {
+        List<SearchFlightDTO> listOfFlights = new ArrayList<>();
+        for (SearchFlightDTO dto : searchFlightDTOS
+        ) {
+            if (dto.getTicket()!=null) {
+                listOfFlights.add(dto);
+            }
+        }
+        return listOfFlights;
+    }
+
+/*    private SearchFlightDTO getSearchFlightDTO(FlightDetail detail, List<Ticket> flightTickets) {
+        SearchFlightDTO searchFlightDTO = new SearchFlightDTO();
+        searchFlightDTO.setCompanyName(detail.getCompany().getName());
+        searchFlightDTO.setFlightCode(detail.getFlightCode());
+        searchFlightDTO.setSector(detail.getSector());
+        searchFlightDTO.setDepartureDate(String.valueOf(detail.getDepartureDate()));
+        searchFlightDTO.setDepartureTime(String.valueOf(detail.getDepartureTime()));
+        searchFlightDTO.setStatus(detail.getStatus());
+        //searchFlightDTO.setTickets(flightTickets);
+        return searchFlightDTO;
+    }*/
 
     private FlightDetail toFlightDetail(FlightDetailRequest request) {
         DateTimeFormatter dateFormatter = new DateTimeFormatter();
         LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
-        LocalDateTime departureTime=dateFormatter.formatLocalDateTime(request.getDepartureTime());
+        /*LocalDateTime departureTime=dateFormatter.formatLocalDateTime(request.getDepartureTime());
         System.out.println(LocalDate.now());
         System.out.println(date);
         LocalTime parseTime=LocalTime.parse("01:15");
@@ -125,8 +159,7 @@ public class FlightServiceImpl implements FlightService {
             LocalTime time=LocalTime.now().plusHours(2);
             Long totalHours = ChronoUnit.HOURS.between(LocalTime.now().plusHours(1),parseTime);
             System.out.println(totalHours);
-        }
-
+        }*/
         FlightDetail flightDetail = new FlightDetail();
         flightDetail.setFlightCode(request.getFlightCode());
         flightDetail.setStatus(request.getStatus());
@@ -134,6 +167,7 @@ public class FlightServiceImpl implements FlightService {
         flightDetail.setDepartureDate(date);
         flightDetail.setSector(toSector(request.getSectorCode()));
         flightDetail.setDepartureTime(request.getDepartureTime());
+        flightDetail.setNumberOfAvailableSeats(request.getAvailableSeats());
         return flightDetail;
     }
 
@@ -155,10 +189,12 @@ public class FlightServiceImpl implements FlightService {
             throw new NullPointerException("Sector Doesn't exist");
     }
 
-    private List<FlightDetail> toSearchFlight(Sector sector, LocalDate date) {
-        List<FlightDetail> flightDetails=flightRepo.findFlightBySectorAndDate(sector, date);
-        if (flightDetails==null)
-            throw new NullPointerException("The Flights are Not Present for departure date: "+date +"\n"+"sector: "+sector.getSectorCode());
+    private List<FlightDetail> toSearchFlight(Sector sector, LocalDate date, int numberOfTraveller) {
+        if (numberOfTraveller == 0)
+            throw new CustomException(CustomException.Type.INVALID_NUMBER_OF_TRAVELLERS);
+        List<FlightDetail> flightDetails = flightRepo.findFlightBySectorAndDate(sector, date, numberOfTraveller);
+        if (flightDetails.isEmpty())
+            throw new NullPointerException("The Flights are Not Present for departure date: " + date + " " + "sector: " + sector.getSectorCode());
         return flightDetails;
     }
 
@@ -169,24 +205,64 @@ public class FlightServiceImpl implements FlightService {
         } else
             throw new NullPointerException("The company does not exist");
     }
+
     private void checkValidation(FlightDetailRequest request) {
         checkFlightCode(request.getFlightCode());
         checkFlightForTheDate(request);
     }
 
     private void checkFlightForTheDate(FlightDetailRequest request) {
-        Sector sector=toSector(request.getSectorCode());
-        AirlineCompany company=toCompany(request.getCompanyName());
+        Sector sector = toSector(request.getSectorCode());
+        AirlineCompany company = toCompany(request.getCompanyName());
         DateTimeFormatter dateFormatter = new DateTimeFormatter();
         LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
-        int count=flightRepo.findFlightBySectorDateAndTime(sector,company,date,request.getDepartureTime());
+        int count = flightRepo.findFlightBySectorDateAndTime(sector, company, date, request.getDepartureTime());
         if (count > 0)
             throw new CustomException(CustomException.Type.FLIGHT_ALREADY_EXIST);
     }
 
     private void checkFlightCode(String flightCode) {
-        int count=flightRepo.countFlightCode(flightCode);
+        int count = flightRepo.countFlightCode(flightCode);
         if (count > 0)
             throw new CustomException(CustomException.Type.FLIGHT_CODE_ALREADY_EXIST);
     }
+    private List<SearchFlightDTO> sortByTicketPriceAsc(List<SearchFlightDTO> searchFlightDTOS) {
+        int n=searchFlightDTOS.size();
+        SearchFlightDTO[] array = new SearchFlightDTO[searchFlightDTOS.size()];
+        searchFlightDTOS.toArray(array);
+        SearchFlightDTO temp= new SearchFlightDTO();
+        if (searchFlightDTOS != null) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 1; j < (n - i); j++) {
+                    if (array[j - 1].getTicket().getPrice() > array[j].getTicket().getPrice()) {
+                        temp = array[j - 1];
+                        array[j - 1]=array[j];
+                        array[j]=temp;
+                    }
+                }
+            }
+        }
+        List<SearchFlightDTO> sortedSearchFlights= Arrays.asList(array);
+        return sortedSearchFlights;
+    }
+    private List<SearchFlightDTO> sortByTicketPriceDesc(List<SearchFlightDTO> searchFlightDTOS) {
+        int n = searchFlightDTOS.size();
+        SearchFlightDTO[] array = new SearchFlightDTO[searchFlightDTOS.size()];
+        searchFlightDTOS.toArray(array);
+        SearchFlightDTO temp = new SearchFlightDTO();
+        if (searchFlightDTOS != null) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 1; j < (n - i); j++) {
+                    if (array[j - 1].getTicket().getPrice() < array[j].getTicket().getPrice()) {
+                        temp = array[j - 1];
+                        array[j - 1] = array[j];
+                        array[j] = temp;
+                    }
+                }
+            }
+        }
+        List<SearchFlightDTO> sortedSearchFlights = Arrays.asList(array);
+        return sortedSearchFlights;
+    }
+
 }

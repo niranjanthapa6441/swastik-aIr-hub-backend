@@ -17,8 +17,9 @@ public class SearchFlightDTO {
     private String flightCode;
     private String departureDate;
     private String departureTime;
-    private String sectorCode;
+    private Sector sector;
     private String companyName;
     private String status;
-    private List<Ticket> tickets;
+    private Ticket ticket;
+    //private List<Ticket> tickets;
 }

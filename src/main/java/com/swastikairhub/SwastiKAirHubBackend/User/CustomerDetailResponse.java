@@ -1,11 +1,11 @@
-package com.swastikairhub.SwastiKAirHubBackend.Customer;
+package com.swastikairhub.SwastiKAirHubBackend.User;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class CustomerDTO {
+public class CustomerDetailResponse {
     private String id;
     private String firstName;
     private String lastName;
