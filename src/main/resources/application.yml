@@ -18,6 +18,5 @@ server:
   port: 8083
 bezkoder:
   app:
-    jwtCookieName: bezkoder
     jwtSecret: bezKoderSecretKey
     jwtExpirationMs: 86400000
