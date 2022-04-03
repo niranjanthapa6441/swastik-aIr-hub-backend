@@ -23,12 +23,6 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    JWTUtils jwtUtils;
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findAll(){
         return RestResponse.ok(service.findAll());
@@ -42,22 +36,8 @@ public class UserController {
         return RestResponse.ok(service.save(request));
     }
     @PostMapping(value = "/login",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(new LoginDTO(
-                userDetails.getUsername(),
-                userDetails.getId(),
-                "Bearer",
-                jwt
-        ));
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request){
+        return RestResponse.ok(service.login(request));
     }
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody SignUpRequest request){

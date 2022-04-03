@@ -3,16 +3,23 @@ package com.swastikairhub.SwastiKAirHubBackend.User;
 import com.swastikairhub.SwastiKAirHubBackend.Role.ERole;
 import com.swastikairhub.SwastiKAirHubBackend.Role.Role;
 import com.swastikairhub.SwastiKAirHubBackend.Role.RoleRepository;
+import com.swastikairhub.SwastiKAirHubBackend.Security.JWT.JWTUtils;
 import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Encoder;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,6 +29,13 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder encoder;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JWTUtils jwtUtils;
+
     @Override
     public String save(SignUpRequest request) {
         checkValidation(request);
@@ -68,6 +82,25 @@ public class UserServiceImpl implements UserService {
             return toCustomerDTO(customer);
         } else
             throw new NullPointerException("The Customer Doesn't Exist");
+    }
+
+    @Override
+    public LoginDTO login(LoginRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+        return new LoginDTO(
+                userDetails.getUsername(),
+                userDetails.getId(),
+                "Bearer",
+                jwt
+        );
     }
 
     private CustomerDetailResponse toCustomerDTO(User customer) {

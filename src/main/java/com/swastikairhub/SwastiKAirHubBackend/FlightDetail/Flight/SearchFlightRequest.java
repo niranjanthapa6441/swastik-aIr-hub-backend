@@ -13,9 +13,7 @@ public class SearchFlightRequest {
     private String sectorCode;
     @NotBlank(message = "the departure date should not be empty")
     private String departureDate;
-    @NotBlank(message = "the arrival date should not be empty")
     private String arrivalDate;
-    @NotBlank(message = "the nationality should not be empty")
     private String nationality;
     @NotNull(message = "the number of  traveller should not be empty")
     private int numberOfTraveller;
