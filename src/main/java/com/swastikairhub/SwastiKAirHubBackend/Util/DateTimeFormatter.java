@@ -12,14 +12,12 @@ public class DateTimeFormatter {
                       java.time.format.DateTimeFormatter format)
     {
 
-        // Converting the string to date
-        // in the specified format
         LocalDate date = LocalDate.parse(string, format);// Returning the converted date
         return date;
     }
     public LocalDate formatDate(String date){
         java.time.format.DateTimeFormatter format
-                = java.time.format.DateTimeFormatter.ofPattern("d MMMM, yyyy");
+                = java.time.format.DateTimeFormatter.ofPattern("MMMM d, yyyy");
         // Try block tp check for exceptions
         try {
 

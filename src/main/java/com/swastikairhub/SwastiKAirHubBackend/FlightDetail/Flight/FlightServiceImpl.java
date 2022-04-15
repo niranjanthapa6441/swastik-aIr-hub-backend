@@ -90,7 +90,7 @@ public class FlightServiceImpl implements FlightService {
         List<FlightDetail> searchFlights = toSearchFlight(sector, date, request.getNumberOfTraveller());
         List<SearchFlightDTO> searchFlightDTOS = getSearchFlightDTOS(searchFlights);
         if (searchFlightDTOS.isEmpty()){
-            throw new NullPointerException("Flights for sector "+request.getSectorCode()+"and departure date "+request.getDepartureDate()+"does not exist");
+            throw new NullPointerException("Flights for sector "+request.getSectorCode()+"and"+"\n"+" departure date "+request.getDepartureDate()+"does not exist");
         }
         return searchFlightDTOS;
     }
@@ -194,7 +194,7 @@ public class FlightServiceImpl implements FlightService {
             throw new CustomException(CustomException.Type.INVALID_NUMBER_OF_TRAVELLERS);
         List<FlightDetail> flightDetails = flightRepo.findFlightBySectorAndDate(sector, date, numberOfTraveller);
         if (flightDetails.isEmpty())
-            throw new NullPointerException("The Flights are Not Present for departure date: " + date + " " + "sector: " + sector.getSectorCode());
+            throw new NullPointerException("No Available Flights for"+ "\n"+"Departure date: " + date + "\n"+"and " + "Sector: " + sector.getSectorCode());
         return flightDetails;
     }
 

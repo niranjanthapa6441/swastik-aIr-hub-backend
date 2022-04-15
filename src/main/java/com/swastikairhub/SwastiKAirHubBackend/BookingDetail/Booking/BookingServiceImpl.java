@@ -3,6 +3,9 @@ package com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Booking;
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.Passenger;
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.PassengerRepo;
 import com.swastikairhub.SwastiKAirHubBackend.BookingDetail.Passenger.PassengerRequest;
+import com.swastikairhub.SwastiKAirHubBackend.PaymentDetail.Payment;
+import com.swastikairhub.SwastiKAirHubBackend.PaymentDetail.PaymentRepo;
+import com.swastikairhub.SwastiKAirHubBackend.PaymentDetail.PaymentServiceImpl;
 import com.swastikairhub.SwastiKAirHubBackend.User.User;
 import com.swastikairhub.SwastiKAirHubBackend.User.UserRepo;
 import com.swastikairhub.SwastiKAirHubBackend.FlightDetail.Flight.FlightDetail;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +38,8 @@ public class BookingServiceImpl implements BookingService {
     private FlightRepo flightRepo;
     @Autowired
     private PassengerRepo passengerRepo;
+    @Autowired
+    private PaymentRepo paymentRepo;
 
     @Override
     public Iterable<Booking> findAll() {
@@ -49,7 +55,20 @@ public class BookingServiceImpl implements BookingService {
     public BookingDTO save(BookingRequest request) {
         Booking booking = repo.save(toBooking(request));
         toPassengers(booking,request.getPassengerList());
+        toPayment(booking,request);
         return toBookingDTO(booking);
+    }
+
+    private void toPayment(Booking booking, BookingRequest request) {
+        Payment payment= new Payment();
+        payment.setPaymentDate(LocalDate.now());
+        payment.setPaymentMethod(request.getPaymentMethod());
+        payment.setPaymentTIme(LocalTime.now());
+        payment.setStatus(request.getStatus());
+        payment.setTotalAmount(request.getPaidAmount());
+        payment.setPaidVia(request.getPaidVia());
+        payment.setBooking(booking);
+        paymentRepo.save(payment);
     }
 
     @Override
@@ -86,12 +105,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private Booking getBooking(BookingRequest request, FlightTicket flightTicket, Optional<User> findCustomer) {
+        System.out.println("ticket price"+request.getTotalTicketPrice());
         Booking booking = new Booking();
         booking.setBookingDate(LocalDate.now());
         booking.setBookingTime(LocalTime.now());
         booking.setCustomer(findCustomer.get());
         booking.setFlightTicket(flightTicket);
         booking.setStatus(request.getStatus());
+        booking.setNumberOfTraveller(request.getNumberOfTraveller());
+        booking.setTotalTicketPrice(request.getTotalTicketPrice());
         return booking;
     }
 
