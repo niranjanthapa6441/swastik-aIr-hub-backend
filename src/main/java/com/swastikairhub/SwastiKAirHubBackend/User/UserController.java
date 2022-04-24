@@ -40,7 +40,8 @@ public class UserController {
         return RestResponse.ok(service.login(request));
     }
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody SignUpRequest request){
+    public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody UpdateProfileRequest request){
+
         return RestResponse.ok(service.update(id,request));
     }
     @DeleteMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)

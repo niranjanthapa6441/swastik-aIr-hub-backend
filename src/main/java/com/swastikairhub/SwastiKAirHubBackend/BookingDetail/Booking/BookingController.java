@@ -43,4 +43,8 @@ public class BookingController {
     public ResponseEntity<Object> findByCustomerId(@PathVariable String id) {
         return RestResponse.ok(service.findByCustomerId(id));
     }
+    @GetMapping(value = "/customer/ticket/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findTickets(@PathVariable String id) {
+        return RestResponse.ok(service.findTicketByBookingId(id));
+    }
 }

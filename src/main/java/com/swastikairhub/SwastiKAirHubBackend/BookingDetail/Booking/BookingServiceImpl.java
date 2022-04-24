@@ -64,8 +64,8 @@ public class BookingServiceImpl implements BookingService {
         payment.setPaymentDate(LocalDate.now());
         payment.setPaymentMethod(request.getPaymentMethod());
         payment.setPaymentTIme(LocalTime.now());
-        payment.setStatus(request.getStatus());
-        payment.setTotalAmount(request.getPaidAmount());
+        payment.setStatus(request.getPaymentStatus());
+        payment.setTotalAmount(request.getTotalTicketPrice());
         payment.setPaidVia(request.getPaidVia());
         payment.setBooking(booking);
         paymentRepo.save(payment);
@@ -93,6 +93,28 @@ public class BookingServiceImpl implements BookingService {
             throw new NullPointerException("The Customer Doesn't exist");
         Iterable<Booking> bookings=repo.findBookingByCustomerId(customer);
         return bookings;
+    }
+
+    @Override
+    public Iterable<PassengerTicketDTO> findTicketByBookingId(String id) {
+        List<PassengerTicketDTO> passengerTickets= new ArrayList<>();
+        Optional<Booking> booking=repo.findById(id);
+        Iterable<Passenger> passengers= passengerRepo.findPassengerByBookingId(booking.get());
+        for (Passenger passenger:passengers
+             ) {
+            PassengerTicketDTO passengerTicketDTO= new PassengerTicketDTO();
+            passengerTicketDTO.setPassengerName(passenger.getFirstName()+passenger.getMiddleName()+passenger.getLastName());
+            passengerTicketDTO.setDeparture(booking.get().getFlightTicket().getDetail().getSector().getFrom());
+            passengerTicketDTO.setArrival(booking.get().getFlightTicket().getDetail().getSector().getTo());
+            passengerTicketDTO.setFlightCode(booking.get().getFlightTicket().getDetail().getFlightCode());
+            passengerTicketDTO.setTicketPrice(booking.get().getFlightTicket().getTicket().getPrice());
+            passengerTicketDTO.setDepartureDate(booking.get().getFlightTicket().getDetail().getDepartureDate());
+            passengerTicketDTO.setDepartureTime(booking.get().getFlightTicket().getDetail().getDepartureTime());
+            passengerTicketDTO.setSectorCode(booking.get().getFlightTicket().getDetail().getSector().getSectorCode());
+            passengerTicketDTO.setTicketNumber(booking.get().getId());
+            passengerTickets.add(passengerTicketDTO);
+        }
+        return passengerTickets;
     }
 
     private Booking toBooking(BookingRequest request) {
@@ -156,7 +178,7 @@ public class BookingServiceImpl implements BookingService {
     private Passenger getPassenger(Booking booking, PassengerRequest passengerRequest) {
         Passenger passenger= new Passenger();
         passenger.setFirstName(passengerRequest.getFirstName());
-        passenger.setMiddleName(passengerRequest.getLastName());
+        passenger.setMiddleName(passengerRequest.getMiddleName());
         passenger.setLastName(passengerRequest.getLastName());
         passenger.setPhoneNumber(passengerRequest.getPhoneNumber());
         passenger.setBooking(booking);
@@ -172,6 +194,7 @@ public class BookingServiceImpl implements BookingService {
                 customer(booking.getCustomer()).
                 flightTicket(booking.getFlightTicket()).
                 passengerList(passengers).
+                totalPrice(booking.getTotalTicketPrice()).
                 status(booking.getStatus()).build();
     }
     private BookingDTO toFindByBookingIdDTO(Booking booking, List<Passenger> passengers) {

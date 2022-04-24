@@ -50,14 +50,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String update(String id, SignUpRequest request) {
-        checkValidation(request);
+    public User update(String id, UpdateProfileRequest request) {
         Optional<User> findCustomer = repo.findById(id);
+        checkUpdateValidation(request,findCustomer.get());
         if (findCustomer.isPresent()) {
-            User updateCustomer = toCustomer(request);
-            updateCustomer.setId(id);
+            User updateCustomer = toUpdateCustomer(request,findCustomer.get());
             User updatedCustomer = repo.save(updateCustomer);
-            return "user details updated";
+            return updatedCustomer;
         } else
             throw new NullPointerException("The customer does not exist");
     }
@@ -128,6 +127,22 @@ public class UserServiceImpl implements UserService {
         customer.setStatus("Registered");
         return customer;
     }
+    private User toUpdateCustomer(UpdateProfileRequest request,User customer) {
+        User updateCustomer=new User();
+        Set<Role> roles = getRoles();
+        updateCustomer.setId(customer.getId());
+        updateCustomer.setFirstName(request.getFirstName());
+        updateCustomer.setEmail(request.getEmail());
+        updateCustomer.setLastName(request.getLastName());
+        updateCustomer.setMiddleName(request.getMiddleName());
+        updateCustomer.setPhoneNumber(request.getPhoneNumber());
+        updateCustomer.setUsername(customer.getUsername());
+        updateCustomer.setPassword(customer.getPassword());
+        updateCustomer.setRoles(roles);
+        updateCustomer.setStatus("Registered");
+        return updateCustomer;
+    }
+
 
     private Set<Role> getRoles() {
         Role role=roleRepository.findByName(ERole.ROLE_USER);
@@ -141,7 +156,25 @@ public class UserServiceImpl implements UserService {
         checkUsername(request);
         checkPhoneNumber(request);
     }
+    private void checkUpdateValidation(UpdateProfileRequest request,User user) {
+        checkUpdateEmail(request,user);
+        checkUpdatePhoneNumber(request,user);
+    }
+    private void checkUpdateEmail(UpdateProfileRequest request,User user) {
+        Optional<User> customer=repo.findCustomerByEmail(request.getEmail());
+        if (customer.isPresent()){
+            if (!customer.get().getId().equals(user.getId()))
+                throw new CustomException(CustomException.Type.EMAIL_ALREADY_EXITS);
+        }
 
+    }
+    private void checkUpdatePhoneNumber(UpdateProfileRequest request,User user) {
+        Optional<User> customer=repo.findCustomerByPhoneNumber(request.getPhoneNumber());
+        if (customer.isPresent()){
+            if (!customer.get().getId().equals(user.getId()))
+                throw new CustomException(CustomException.Type.PHONE_NUMBER_ALREADY_EXISTS);
+        }
+    }
     private void checkEmail(SignUpRequest request) {
         Optional<User> customer=repo.findCustomerByEmail(request.getEmail());
         if (customer.isPresent())

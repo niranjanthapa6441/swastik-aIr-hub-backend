@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     String save(SignUpRequest request);
     Iterable<User> findAll();
-    String update(String id, SignUpRequest request);
+    User update(String id,UpdateProfileRequest request);
     String delete(String id);
     CustomerDetailResponse findById(String id);
     LoginDTO login(LoginRequest request);

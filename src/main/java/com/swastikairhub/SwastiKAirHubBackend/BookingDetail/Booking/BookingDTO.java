@@ -20,7 +20,7 @@ public class BookingDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     private String bookingTime;
     private String numberOfTraveller;
-    private String totalPrice;
+    private int totalPrice;
     private String status;
     private List<Passenger> passengerList;
 }

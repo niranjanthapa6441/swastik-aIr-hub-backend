@@ -12,4 +12,5 @@ public interface BookingService {
     BookingDTO delete(String id);
     BookingDTO findById(String id);
     Iterable<Booking> findByCustomerId(String id);
+    Iterable<PassengerTicketDTO> findTicketByBookingId(String id);
 }
