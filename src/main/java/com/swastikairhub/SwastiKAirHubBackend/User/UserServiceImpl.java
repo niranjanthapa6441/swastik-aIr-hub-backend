@@ -43,12 +43,24 @@ public class UserServiceImpl implements UserService {
         User saveCustomer = repo.save(customer);
         return "user registered successfully";
     }
-
     @Override
-    public Iterable<User> findAll() {
-        return repo.findAll();
-    }
+    public LoginDTO login(LoginRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
 
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+        return new LoginDTO(
+                userDetails.getUsername(),
+                userDetails.getId(),
+                "Bearer",
+                jwt
+        );
+    }
     @Override
     public User update(String id, UpdateProfileRequest request) {
         Optional<User> findCustomer = repo.findById(id);
@@ -82,26 +94,10 @@ public class UserServiceImpl implements UserService {
         } else
             throw new NullPointerException("The Customer Doesn't Exist");
     }
-
     @Override
-    public LoginDTO login(LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-        return new LoginDTO(
-                userDetails.getUsername(),
-                userDetails.getId(),
-                "Bearer",
-                jwt
-        );
+    public Iterable<User> findAll() {
+        return repo.findAll();
     }
-
     private CustomerDetailResponse toCustomerDTO(User customer) {
         return CustomerDetailResponse.builder().
                 id(customer.getId()).

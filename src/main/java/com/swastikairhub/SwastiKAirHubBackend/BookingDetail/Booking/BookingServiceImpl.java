@@ -59,18 +59,6 @@ public class BookingServiceImpl implements BookingService {
         return toBookingDTO(booking);
     }
 
-    private void toPayment(Booking booking, BookingRequest request) {
-        Payment payment= new Payment();
-        payment.setPaymentDate(LocalDate.now());
-        payment.setPaymentMethod(request.getPaymentMethod());
-        payment.setPaymentTIme(LocalTime.now());
-        payment.setStatus(request.getPaymentStatus());
-        payment.setTotalAmount(request.getTotalTicketPrice());
-        payment.setPaidVia(request.getPaidVia());
-        payment.setBooking(booking);
-        paymentRepo.save(payment);
-    }
-
     @Override
     public BookingDTO delete(String id) {
         return null;
@@ -206,5 +194,16 @@ public class BookingServiceImpl implements BookingService {
                 flightTicket(booking.getFlightTicket()).
                 passengerList(passengers).
                 status(booking.getStatus()).build();
+    }
+    private void toPayment(Booking booking, BookingRequest request) {
+        Payment payment= new Payment();
+        payment.setPaymentDate(LocalDate.now());
+        payment.setPaymentMethod(request.getPaymentMethod());
+        payment.setPaymentTIme(LocalTime.now());
+        payment.setStatus(request.getPaymentStatus());
+        payment.setTotalAmount(request.getTotalTicketPrice());
+        payment.setPaidVia(request.getPaidVia());
+        payment.setBooking(booking);
+        paymentRepo.save(payment);
     }
 }
