@@ -150,8 +150,8 @@ public class BookingServiceImpl implements BookingService {
 
     private Optional<User> getCustomer(BookingRequest request) {
         Optional<User> findCustomer = userRepo.findById(request.getCustomerId());
-        if (findCustomer.isEmpty())
-            throw new NullPointerException("The Customer Does not Exist");
+        /*if (findCustomer.isEmpty())
+            throw new NullPointerException("The Customer Does not Exist");*/
         return findCustomer;
     }
 
