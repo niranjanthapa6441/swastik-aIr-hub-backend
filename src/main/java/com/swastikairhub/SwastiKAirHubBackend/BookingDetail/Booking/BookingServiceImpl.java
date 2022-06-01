@@ -77,8 +77,8 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Iterable<Booking> findByCustomerId(String id) {
         Optional<User> customer= userRepo.findById(id);
-        if (customer.isEmpty())
-            throw new NullPointerException("The Customer Doesn't exist");
+        /*if (customer.isEmpty())
+            throw new NullPointerException("The Customer Doesn't exist");*/
         Iterable<Booking> bookings=repo.findBookingByCustomerId(customer);
         return bookings;
     }
