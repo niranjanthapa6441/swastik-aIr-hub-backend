@@ -9,6 +9,7 @@ import com.swastikairhub.SwastiKAirHubBackend.User.Registration.RegistrationToke
 import com.swastikairhub.SwastiKAirHubBackend.Util.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ private RegistrationService registrationService;
     }*/
     @PostMapping(value = "/register",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> save(@Valid @RequestBody SignUpRequest request){
-        System.out.println("LOgin insider");
+        System.out.println("Login insider");
         return RestResponse.ok(registrationService.register(request));
     }
     @GetMapping(path = "/register/confirm")
@@ -56,10 +57,8 @@ private RegistrationService registrationService;
     public ResponseEntity<Object> delete(@PathVariable String id){
         return RestResponse.ok(service.delete(id));
     }
-    /*@PostMapping("/signout")
+    @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(new MessageResponse("You've been signed out!"));
-    }*/
+       return RestResponse.ok(service.logout());
+    }
 }

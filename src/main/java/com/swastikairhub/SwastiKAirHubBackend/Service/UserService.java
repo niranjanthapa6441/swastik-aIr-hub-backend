@@ -5,7 +5,9 @@ import com.swastikairhub.SwastiKAirHubBackend.Request.LoginRequest;
 import com.swastikairhub.SwastiKAirHubBackend.Request.SignUpRequest;
 import com.swastikairhub.SwastiKAirHubBackend.Request.UpdateProfileRequest;
 import com.swastikairhub.SwastiKAirHubBackend.User.CustomerDetailResponse;
+import com.swastikairhub.SwastiKAirHubBackend.User.MessageResponse;
 import com.swastikairhub.SwastiKAirHubBackend.User.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,4 +19,6 @@ public interface UserService {
     CustomerDetailResponse findById(String id);
     LoginDTO login(LoginRequest request);
     public int enableAppUser(String email);
+
+    public ResponseEntity<MessageResponse> logout();
 }

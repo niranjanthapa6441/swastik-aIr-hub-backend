@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.ServiceImpl;
 
+import com.google.common.net.HttpHeaders;
 import com.swastikairhub.SwastiKAirHubBackend.Repositories.UserRepo;
 import com.swastikairhub.SwastiKAirHubBackend.Request.LoginRequest;
 import com.swastikairhub.SwastiKAirHubBackend.Request.SignUpRequest;
@@ -14,6 +15,8 @@ import com.swastikairhub.SwastiKAirHubBackend.User.*;
 import com.swastikairhub.SwastiKAirHubBackend.User.Registration.RegistrationToken.ConfirmationToken;
 import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -86,6 +89,14 @@ public class UserServiceImpl implements UserService {
         }
         return 1;
     }
+
+    @Override
+    public ResponseEntity<MessageResponse> logout() {
+        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(new MessageResponse("You've been signed out!"));
+    }
+
     @Override
     public LoginDTO login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
@@ -104,6 +115,7 @@ public class UserServiceImpl implements UserService {
                 jwt
         );
     }
+
     @Override
     public User update(String id, UpdateProfileRequest request) {
         Optional<User> findCustomer = repo.findById(id);
