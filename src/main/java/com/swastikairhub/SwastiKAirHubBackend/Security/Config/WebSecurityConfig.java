@@ -1,7 +1,8 @@
 package com.swastikairhub.SwastiKAirHubBackend.Security.Config;
+
 import com.swastikairhub.SwastiKAirHubBackend.Security.JWT.AuthEntryPointJwt;
 import com.swastikairhub.SwastiKAirHubBackend.Security.JWT.AuthTokenFilter;
-import com.swastikairhub.SwastiKAirHubBackend.User.UserDetailsServiceImpl;
+import com.swastikairhub.SwastiKAirHubBackend.ServiceImpl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -49,8 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/customer/login").permitAll()
+                .antMatchers("/customer/loginresource").permitAll()
                 .antMatchers("/customer/register").permitAll()
+                .antMatchers("/customer/register/confirm").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

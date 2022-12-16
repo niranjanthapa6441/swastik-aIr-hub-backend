@@ -33,6 +33,8 @@ public class User {
     private String password;
     @Column(name = "status",nullable = false)
     private String status;
+    private Boolean locked=false;
+    private Boolean enabled=false;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "et_user_role",

@@ -1,18 +1,18 @@
  INSERT INTO roles(name) VALUES('ROLE_USER');
  INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
  INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-
- insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER1','niranjanthapa6441@gmail.com','Niranjan','Thapa','','password','9810314784','using','niranjan');
- insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER2','robinkarki@gmail.com','Rabindra','Karki','Jung','password','9810314484','using','robin');
- insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER3','ravikhadka@gmail.com','Ravi','Khadka','','password','9810313784','using','ravi');
-insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER4','prabeshkhati@gmail.com','Prabesh','Chettri','Khati','password','9810313284','using','prabesh');
-insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER5','abhisekhKhadka@gmail.com','ABhisekh','Khadka','','password','9810214384','using','abhisekh');
-insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER6','prashannathapa@gmail.com','prashanna','Thapa','','password','9810224784','using','prashanna');
-insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER7','nimatseringsherpa@gmail.com','nima','sherpa','tsering','password','9814314484','using','tseringnima');
-insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER9','nabinshiwakoti@gmail.com','nabin','shiwakoti','Khati','password','9814313284','using','nabin');
-insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER11','nishanbade@gmail.com','nishan','bade','','password','9814314784','using','nishan');
- insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER13','rupashresthagmail.com','rupa','shrestha','','password','9814313784','using','rupa');
- insert into customer (id,email,first_name,last_name,middle_name,password,phone_number,status,username)  values ('CUSTOMER15','sudikshyatwayana@gmail.com','sudikshya','twayana','','password','9814214384','using','sudikshya');
+$
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER1','niranjanthapa@gmail.com','Niranjan','Thapa','','$2a$10$d/4XH0CIbbUN0UtJhk7mT.jCFb/peVBIUgaQmg/G0Q2kkTQrBJUki','9810314784','using','niranjan','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER2','robinkarki@gmail.com','Rabindra','Karki','Jung','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9810314484','using','robin','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER3','ravikhadka@gmail.com','Ravi','Khadka','','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9810313784','using','ravi','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER4','prabeshkhati@gmail.com','Prabesh','Chettri','Khati','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9810313284','using','prabesh','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER5','abhisekhKhadka@gmail.com','ABhisekh','Khadka','','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9810214384','using','abhisekh','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER6','prashannathapa@gmail.com','prashanna','Thapa','','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9810224784','using','prashanna','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER7','nimasherpa@gmail.com','nima','sherpa','tsering','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9814314484','using','tseringnima','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER9','nabinshiwakoti@gmail.com','nabin','shiwakoti','Khati','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9814313284','using','nabin','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER11','nishanbade@gmail.com','nishan','bade','','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9814314784','using','nishan','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER13','rupashresthagmail.com','rupa','shrestha','','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9814313784','using','rupa','true','true');
+insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER15','sudikshyatwayana@gmail.com','sudikshya','twayana','','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9814214384','using','sudikshya','true','true');
 
 
 insert into airline_company(airline_company_id,name,Address,email,phone_number,contract_date,contract_status) values('Company1','Buddha AirLines','kathmandu,Nepal','buddhaair@gmail.com','9850124567','2020-12-20','STAND');
@@ -235,52 +235,12 @@ insert into flight_ticket values('ft116','fgt72',2);
 insert into flight_ticket values('ft117','fgt72',3);
 insert into flight_ticket values('ft118','fgt72',4);
 
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING1','2022-03-27',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING2','2022-03-25',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING3','2022-03-20',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING4','2022-03-18',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING5','2022-03-12',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING6','2022-03-10',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING7','2022-03-08',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING8','2022-03-03',LocalTime,4,'PURCHASED',8000,'CUSTOMER1','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING9','2022-03-27',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING10','2022-03-25',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING11','2022-03-20',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING12','2022-03-18',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING13','2022-03-12',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING14','2022-03-10',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING15','2022-03-08',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING16','2022-03-03',LocalTime,4,'PURCHASED',8000,'CUSTOMER2','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING17','2022-03-27',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING18','2022-03-25',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING19','2022-03-20',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING20','2022-03-18',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING21','2022-03-12',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING22','2022-03-10',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING23','2022-03-08',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-insert into booking(booking_id,booking_date,booking_time,number_of_traveller,status,total_ticket_price,customer_id,flight_ticket_id) values
-('BOOKING24','2022-03-03',LocalTime,4,'PURCHASED',8000,'CUSTOMER3','ft1');
-
+insert into et_user_role values('CUSTOMER2',1);
+insert into et_user_role values('CUSTOMER3',1);
+insert into et_user_role values('CUSTOMER4',1);
+insert into et_user_role values('CUSTOMER5',1);
+insert into et_user_role values('CUSTOMER6',1);
+insert into et_user_role values('CUSTOMER7',1);
+insert into et_user_role values('CUSTOMER8',1);
+insert into et_user_role values('CUSTOMER9',1);
+insert into et_user_role values('CUSTOMER10',1);
