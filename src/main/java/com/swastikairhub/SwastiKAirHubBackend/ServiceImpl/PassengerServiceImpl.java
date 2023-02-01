@@ -1,6 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.ServiceImpl;
 
-import com.swastikairhub.SwastiKAirHubBackend.Repositories.Booking;
+import com.swastikairhub.SwastiKAirHubBackend.Domain.Booking;
 import com.swastikairhub.SwastiKAirHubBackend.Domain.Passenger;
 import com.swastikairhub.SwastiKAirHubBackend.DTO.PassengerDTO;
 import com.swastikairhub.SwastiKAirHubBackend.Repositories.PassengerRepo;

@@ -1,7 +1,6 @@
  INSERT INTO roles(name) VALUES('ROLE_USER');
  INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
  INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-$
 insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER1','niranjanthapa@gmail.com','Niranjan','Thapa','','$2a$10$d/4XH0CIbbUN0UtJhk7mT.jCFb/peVBIUgaQmg/G0Q2kkTQrBJUki','9810314784','using','niranjan','true','true');
 insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER2','robinkarki@gmail.com','Rabindra','Karki','Jung','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9810314484','using','robin','true','true');
 insert into customer (user_id,email,first_name,last_name,middle_name,password,phone_number,status,username,enabled,locked)  values ('CUSTOMER3','ravikhadka@gmail.com','Ravi','Khadka','','$2a$10$YfrGSaiDIaIcwWP78wsWiuTlwabcaO5BCPj.Iryf0m4XdidTTjaaK','9810313784','using','ravi','true','true');

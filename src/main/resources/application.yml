@@ -5,7 +5,7 @@ spring:
     password: 6441
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
           format_sql: true
@@ -37,3 +37,4 @@ bezkoder:
   app:
     jwtSecret: bezKoderSecretKey
     jwtExpirationMs: 86400000
+    jwtCookieName: bezkoder

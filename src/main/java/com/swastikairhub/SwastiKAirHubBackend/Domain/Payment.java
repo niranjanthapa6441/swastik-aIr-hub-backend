@@ -1,6 +1,5 @@
 package com.swastikairhub.SwastiKAirHubBackend.Domain;
 
-import com.swastikairhub.SwastiKAirHubBackend.Repositories.Booking;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 

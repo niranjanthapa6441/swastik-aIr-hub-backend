@@ -45,7 +45,6 @@ private RegistrationService registrationService;
     }
     @PostMapping(value = "/loginresource",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request){
-        System.out.println("LOgin insider");
         return RestResponse.ok(service.login(request));
     }
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)

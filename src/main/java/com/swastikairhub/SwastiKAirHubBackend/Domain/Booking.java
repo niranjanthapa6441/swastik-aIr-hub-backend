@@ -1,4 +1,4 @@
-package com.swastikairhub.SwastiKAirHubBackend.Repositories;
+package com.swastikairhub.SwastiKAirHubBackend.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swastikairhub.SwastiKAirHubBackend.User.User;

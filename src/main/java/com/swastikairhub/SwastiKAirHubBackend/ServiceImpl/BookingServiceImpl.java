@@ -108,7 +108,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private Booking getBooking(BookingRequest request, FlightTicket flightTicket, Optional<User> findCustomer) {
-        System.out.println("ticket price"+request.getTotalTicketPrice());
         Booking booking = new Booking();
         booking.setBookingDate(LocalDate.now());
         booking.setBookingTime(LocalTime.now());

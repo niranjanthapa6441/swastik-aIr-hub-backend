@@ -1,6 +1,5 @@
 package com.swastikairhub.SwastiKAirHubBackend.Domain;
 
-import com.swastikairhub.SwastiKAirHubBackend.Repositories.Booking;
 import com.swastikairhub.SwastiKAirHubBackend.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

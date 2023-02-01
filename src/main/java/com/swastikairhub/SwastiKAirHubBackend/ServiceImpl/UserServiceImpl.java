@@ -89,7 +89,6 @@ public class UserServiceImpl implements UserService {
         }
         return 1;
     }
-
     @Override
     public ResponseEntity<MessageResponse> logout() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
@@ -115,7 +114,6 @@ public class UserServiceImpl implements UserService {
                 jwt
         );
     }
-
     @Override
     public User update(String id, UpdateProfileRequest request) {
         Optional<User> findCustomer = repo.findById(id);
