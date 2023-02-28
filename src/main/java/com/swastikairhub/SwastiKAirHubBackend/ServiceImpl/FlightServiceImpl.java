@@ -17,8 +17,16 @@ import com.swastikairhub.SwastiKAirHubBackend.Service.FlightService;
 import com.swastikairhub.SwastiKAirHubBackend.Util.CustomException;
 import com.swastikairhub.SwastiKAirHubBackend.Util.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +46,8 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightTicketRepo flightTicketRepo;
 
+    @Autowired
+    private EntityManager entityManager;
     @Override
     public FlightDTO save(FlightDetailRequest request) {
         checkValidation(request);
@@ -85,7 +95,8 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<SearchFlightDTO> searchFlight(SearchFlightRequest request) {
+    public Page<SearchFlightDTO> searchFlight(SearchFlightRequest request, int pageNumber, int pageSize) {
+
         DateTimeFormatter dateFormatter = new DateTimeFormatter();
         LocalDate date = dateFormatter.formatDate(request.getDepartureDate());
         Sector sector = toSector(request.getSectorCode());
@@ -94,7 +105,20 @@ public class FlightServiceImpl implements FlightService {
         if (searchFlightDTOS.isEmpty()){
             throw new NullPointerException("Flights for sector "+request.getSectorCode()+"and"+"\n"+" departure date "+request.getDepartureDate()+"does not exist");
         }
-        return searchFlightDTOS;
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<SearchFlightDTO> resultPage = null;
+
+        if (searchFlightDTOS.size() > 0) {
+            int from = pageNumber * pageSize;
+            int to = from + pageSize;
+            if (searchFlightDTOS.size() < to) {
+                to = searchFlightDTOS.size();
+            }
+            resultPage = new PageImpl<>(searchFlightDTOS.subList(from, to), pageable, searchFlightDTOS.size()); // list is sliced according to page number and size
+        } else resultPage = new PageImpl<>(new ArrayList<>(), pageable, 0);
+
+        return resultPage;
     }
 
     private List<SearchFlightDTO> getSearchFlightDTOS(List<FlightDetail> searchFlights) {

@@ -5,9 +5,8 @@ import com.swastikairhub.SwastiKAirHubBackend.DTO.SearchFlightDTO;
 import com.swastikairhub.SwastiKAirHubBackend.Domain.FlightDetail;
 import com.swastikairhub.SwastiKAirHubBackend.Request.FlightDetailRequest;
 import com.swastikairhub.SwastiKAirHubBackend.Request.SearchFlightRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface FlightService {
@@ -16,5 +15,6 @@ public interface FlightService {
     FlightDTO findByFlightCode(String flightCode);
     FlightDTO update(String id,FlightDetailRequest request);
     FlightDTO delete(String id);
-    List<SearchFlightDTO> searchFlight(SearchFlightRequest request);
+
+    Page<SearchFlightDTO> searchFlight(SearchFlightRequest request, int pageNumber, int pageSize);
 }

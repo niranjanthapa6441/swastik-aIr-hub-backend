@@ -38,7 +38,9 @@ public class FlightController {
         return RestResponse.ok(service.delete(id),"Flight Details Saved");
     }
     @PostMapping(value = "/searchFlights",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> findAvailableFlights(@Valid @RequestBody SearchFlightRequest request){
-        return RestResponse.ok(service.searchFlight(request),"Found FLights");
+    public ResponseEntity<Object> findAvailableFlights(@Valid @RequestBody SearchFlightRequest request,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "5") int size){
+        return RestResponse.ok(service.searchFlight(request,page, size),"Found FLights");
     }
 }

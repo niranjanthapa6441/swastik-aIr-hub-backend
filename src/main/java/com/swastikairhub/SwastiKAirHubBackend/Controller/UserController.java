@@ -9,10 +9,8 @@ import com.swastikairhub.SwastiKAirHubBackend.User.Registration.RegistrationToke
 import com.swastikairhub.SwastiKAirHubBackend.Util.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @RestController

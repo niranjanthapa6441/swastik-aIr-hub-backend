@@ -2,7 +2,6 @@ package com.swastikairhub.SwastiKAirHubBackend.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swastikairhub.SwastiKAirHubBackend.User.User;
-import com.swastikairhub.SwastiKAirHubBackend.Domain.FlightTicket;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 

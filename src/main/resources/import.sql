@@ -240,6 +240,4 @@ insert into et_user_role values('CUSTOMER4',1);
 insert into et_user_role values('CUSTOMER5',1);
 insert into et_user_role values('CUSTOMER6',1);
 insert into et_user_role values('CUSTOMER7',1);
-insert into et_user_role values('CUSTOMER8',1);
 insert into et_user_role values('CUSTOMER9',1);
-insert into et_user_role values('CUSTOMER10',1);

@@ -1,5 +1,6 @@
 package com.swastikairhub.SwastiKAirHubBackend.ServiceImpl;
 
+import com.swastikairhub.SwastiKAirHubBackend.DTO.SearchFlightDTO;
 import com.swastikairhub.SwastiKAirHubBackend.Domain.*;
 import com.swastikairhub.SwastiKAirHubBackend.Repositories.*;
 import com.swastikairhub.SwastiKAirHubBackend.DTO.BookingDTO;
@@ -9,6 +10,10 @@ import com.swastikairhub.SwastiKAirHubBackend.Request.PassengerRequest;
 import com.swastikairhub.SwastiKAirHubBackend.Service.BookingService;
 import com.swastikairhub.SwastiKAirHubBackend.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -68,12 +73,20 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Iterable<Booking> findByCustomerId(String id) {
+    public Page<Booking> findByCustomerId(String id,int page, int size) {
         Optional<User> customer= userRepo.findById(id);
-        /*if (customer.isEmpty())
-            throw new NullPointerException("The Customer Doesn't exist");*/
-        Iterable<Booking> bookings=repo.findBookingByCustomerId(customer);
-        return bookings;
+        List<Booking> bookings=repo.findBookingByCustomerId(customer);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Booking> resultPage = null;
+        if (bookings.size() > 0) {
+            int from = page * size;
+            int to = from + size;
+            if (bookings.size() < to) {
+                to = bookings.size();
+            }
+            resultPage = new PageImpl<>(bookings.subList(from, to), pageable, bookings.size()); // list is sliced according to page number and size
+        }
+        return resultPage;
     }
 
     @Override

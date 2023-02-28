@@ -13,6 +13,6 @@ public interface BookingService {
     BookingDTO save(BookingRequest request);
     BookingDTO delete(String id);
     BookingDTO findById(String id);
-    Iterable<Booking> findByCustomerId(String id);
+    Iterable<Booking> findByCustomerId(String id, int page, int size);
     Iterable<PassengerTicketDTO> findTicketByBookingId(String id);
 }

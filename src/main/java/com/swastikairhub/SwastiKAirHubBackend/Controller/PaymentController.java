@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/payment")
@@ -16,7 +17,9 @@ public class PaymentController {
     @Autowired
     PaymentService service;
     @GetMapping(value = "/customer/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> findByCustomerId(@PathVariable String id) {
-        return RestResponse.ok(service.findPaymentByCustomerID(id));
+    public ResponseEntity<Object> findByCustomerId(@PathVariable String id,
+                                                   @RequestParam int page,
+                                                   @RequestParam int size) {
+        return RestResponse.ok(service.findPaymentByCustomerID(id,page,size));
     }
 }
